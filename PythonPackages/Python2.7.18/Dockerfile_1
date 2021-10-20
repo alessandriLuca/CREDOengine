@@ -1,0 +1,35 @@
+FROM library/ubuntu as UBUNTU_BASE
+MAINTAINER alessandri.luca1991@gmail.com
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update \
+    && apt-get -y install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget \
+    && apt-get -y install libblas-dev liblapack-dev \
+    && apt-get -y install libatlas-base-dev \
+    && apt-get -y install gfortran \
+    && apt-get -y install libxml2-dev libxmlsec1-dev \
+    && apt-get install -y libbz2-dev \
+    && apt-get -y install pkg-config\
+    && apt-get update && apt-get install -y --no-install-recommends apt-utils \
+    && apt-get -y install libhdf5-dev
+COPY p7zip_16.02 /tmp/
+RUN apt-get update \
+    && apt-get install -y wget \
+    && mkdir data \
+	&& apt-get -y install build-essential \
+	&& cd /tmp/ && make \
+	&& make all \
+	&& cp ./bin/7za /bin
+RUN apt-get update
+RUN apt-get install -y liblzma-dev
+COPY Python-2.7.18.tgz /tmp/Python-2.7.18.tgz
+RUN tar -xzvf /tmp/Python-2.7.18.tgz
+RUN cd /Python-2.7.18/ && ./configure
+RUN cd /Python-2.7.18/ && make
+RUN cd /Python-2.7.18/ && make install
+COPY pipdeptree-2.1.0-py2-none-any.whl /tmp/
+RUN apt-get update \
+    && apt-get install -y git \
+    && apt-get install -y curl
+RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+RUN python2 get-pip.py
+RUN pip2 install /tmp/pipdeptree-2.1.0-py2-none-any.whl
