@@ -16,4 +16,4 @@ pip2 -v --log /scratch/pip.log install pandas #Python2 requires pip2, different 
 
 Optional Step
 
-If you would like to create a docker with R and python, create two different dockerfile and the dockerFileFolder with the previous step then copy the dockerFolder generated in the MergeDocker folder that you can find in /dockerFileGenerator/mergeDocker/. Enter in the folder MergeDocker and follow the other instructions. 
+If you would like to create a docker with R and python, create two different dockerfile with the respective dockerFileFolder, using the previous step then copy the dockerFolder, in the MergeDocker folder that you can find in /dockerFileGenerator/mergeDocker/. Enter in the folder MergeDocker and follow the other instructions. 
