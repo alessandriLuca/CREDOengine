@@ -23,3 +23,4 @@ rm -r packages
 rm pip.log
 rm out.txt
 rm counts.txt
+chmod -R 777 /scratch/

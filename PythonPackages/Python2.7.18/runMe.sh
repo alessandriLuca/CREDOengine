@@ -11,14 +11,14 @@ if [ $# -eq 1 ]
     exit
 fi
 
-sudo docker rmi -f $1
+ docker rmi -f $1
 mv Dockerfile_1 Dockerfile
-sudo docker build . -t $1
+ docker build . -t $1
 cp configurationFile.sh ./Python2.7.18_toBeInstalled/configurationFile.sh
-sudo docker run -itv $(pwd)/Python2.7.18_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
+ docker run -itv $(pwd)/Python2.7.18_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
-sudo docker build . -t $1
+ docker build . -t $1
 mv Dockerfile Dockerfile_2
 mkdir $2 
 cp Dockerfile_2 ./$2/Dockerfile
@@ -35,4 +35,4 @@ rm -r ./Python2.7.18_toBeInstalled/packages
 rm ./Python2.7.18_toBeInstalled/listForDockerfile.sh
 rm ./Python2.7.18_toBeInstalled/configurationFile.sh
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
-sudo docker rmi -f $1
+ docker rmi -f $1

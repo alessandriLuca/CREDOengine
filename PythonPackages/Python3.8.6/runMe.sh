@@ -10,14 +10,14 @@ if [ $# -eq 1 ]
     echo "You need to provide a docker tag and a $2 name, for example ./buildMe.sh dockertest tempFolder"
     exit
 fi
-sudo docker rmi -f $1
+ docker rmi -f $1
 mv Dockerfile_1 Dockerfile
-sudo docker build . -t $1
+ docker build . -t $1
 cp configurationFile.sh ./Python3.8.6_toBeInstalled/
-sudo docker run -itv $(pwd)/Python3.8.6_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
+ docker run -itv $(pwd)/Python3.8.6_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
-sudo docker build . -t $1
+ docker build . -t $1
 mv Dockerfile Dockerfile_2
 mkdir $2 
 cp Dockerfile_2 ./$2/Dockerfile
@@ -34,4 +34,4 @@ rm -r ./Python3.8.6_toBeInstalled/packages
 rm ./Python3.8.6_toBeInstalled/listForDockerfile.sh
 rm ./Python3.8.6_toBeInstalled/configurationFile.sh
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.'
-sudo docker rmi -f $1
+ docker rmi -f $1
