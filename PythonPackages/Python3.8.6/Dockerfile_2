@@ -21,9 +21,12 @@ RUN apt-get update \
 	&& cp ./bin/7za /bin
 RUN apt-get update
 RUN apt-get install -y liblzma-dev
+RUN apt-get update
+RUN apt-get install -y sqlite3
+RUN apt-get install -y libsqlite3-dev
 COPY Python-3.8.6.tgz /tmp/Python-3.8.6.tgz
 RUN tar -xzvf /tmp/Python-3.8.6.tgz
-RUN cd /Python-3.8.6/ && ./configure
+RUN cd /Python-3.8.6/ && ./configure --enable-loadable-sqlite-extensions --enable-optimizations
 RUN cd /Python-3.8.6/ && make
 RUN cd /Python-3.8.6/ && make install
 COPY pipdeptree-2.1.0-py3-none-any.whl /tmp/
@@ -34,4 +37,5 @@ COPY Python3.8.6_toBeInstalled/install_files.7z* /tmp/
 RUN cd /tmp/ && 7za -y x "*.7z*" 
 COPY Python3.8.6_toBeInstalled/listForDockerfile.sh /tmp/
 RUN /tmp/listForDockerfile.sh
+
 
