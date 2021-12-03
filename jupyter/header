@@ -1,0 +1,31 @@
+FROM ubuntu
+RUN apt update \
+    && apt install -y firefox \
+                      openssh-server \
+                      xauth \
+    && mkdir /var/run/sshd \
+    && mkdir /root/.ssh \
+    && chmod 700 /root/.ssh \
+    && ssh-keygen -A \
+    && sed -i "s/^.*PasswordAuthentication.*$/PasswordAuthentication no/" /etc/ssh/sshd_config \
+    && sed -i "s/^.*X11Forwarding.*$/X11Forwarding yes/" /etc/ssh/sshd_config \
+    && sed -i "s/^.*X11UseLocalhost.*$/X11UseLocalhost no/" /etc/ssh/sshd_config \
+    && grep "^X11UseLocalhost" /etc/ssh/sshd_config || echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
+RUN apt-get update
+RUN apt -y --fix-broken install
+RUN apt-get -y install gfortran
+RUN apt-get -y install build-essential
+RUN apt-get -y install fort77
+RUN apt-get -y install xorg-dev
+RUN apt-get -y install liblzma-dev  libblas-dev gfortran
+RUN apt-get -y install gcc-multilib
+RUN apt-get -y install gobjc++
+RUN apt-get -y install aptitude
+RUN apt-get -y install libbz2-dev
+RUN apt-get -y install libpcre3-dev
+RUN aptitude -y install libreadline-dev
+RUN apt-get -y install libcurl4-openssl-dev
+RUN apt-get -y install libnss3
+RUN apt-get -y install libclang-dev
+RUN apt-get -y install libxkbcommon-x11-0
+RUN apt-get -y install libpq5
