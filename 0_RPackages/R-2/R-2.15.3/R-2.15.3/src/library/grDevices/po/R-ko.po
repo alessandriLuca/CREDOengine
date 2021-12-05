@@ -1,0 +1,393 @@
+# File R_HOME/src/library/grDevices/po/R-ko.po
+# Korean translations for R-Base
+# Copyright (C) 2012 THE R'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the R package
+# Maintainer: Chel Hee Lee (Korean, R Development Translation Team)
+# Email: <gnustats@gmail.com> or <chl948@mail.usask.ca>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.15.2\n"
+"Report-Msgid-Bugs-To: bugs.r-project.org\n"
+"POT-Creation-Date: 2012-07-12 13:10\n"
+"PO-Revision-Date: 2012-09-25 09:26-0600\n"
+"Last-Translator: Chel Hee Lee <gnustats@gmail.com>\n"
+"Language-Team:  <gnustats@gmail.com>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: KOREA, REPUBLIC OF\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "invalid 'filename'"
+msgstr "잘못된 'filename'입니다"
+
+msgid "'coef' must not be negative"
+msgstr "'coef'은 음수가 될 수 없습니다"
+
+msgid "no 'z' matrix specified"
+msgstr "'z' 행렬이 지정되어 있지 않습니다"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "'x'와 'y'의 값들은 오름차순이어야 합니다"
+
+msgid "no proper 'z' matrix specified"
+msgstr "적절한 'z' 행렬이 지정되어 있지 않습니다"
+
+msgid "'bias' must be positive"
+msgstr "'bias'는 반드시 양수이어야 합니다"
+
+msgid "at least 3 columns needed"
+msgstr "최소한 세 개의 열들이 필요합니다"
+
+msgid "rgb matrix must be numeric"
+msgstr "rgb 행렬은 반드시 숫자이어야 합니다"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "rgb 행렬은 반드시 3 행을 가지고 있어야 합니다"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "rgb 값들은 반드시 [0, maxColorValue] 내에 있어야 합니다"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr "'start'와 'end'는 반드시 [0, 1] 내에서 구분되어지는 다른 값들이어야 합니다."
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "'gamma'는 반드시 스칼라 또는 'sRGB'이어야 합니다"
+
+msgid "Color space converter:"
+msgstr "색공간 변환기:"
+
+msgid "Reference white:"
+msgstr "기준 백색:"
+
+msgid "display gamma"
+msgstr "감마 보정"
+
+msgid "'from' must be a colorConverter or string"
+msgstr "'from'은 반드시 colorConverter 또는 문자열이어야 합니다"
+
+msgid "'to' must be a colorConverter or string"
+msgstr "'to'는 반드시 colorConverter 또는 문자열이어야 합니다"
+
+msgid "'from.ref.white' disagrees with definition of"
+msgstr "'from.ref.white'은 다음의 정의와 일치하지 않습니다"
+
+msgid "'to.ref.white' disagrees with definition of"
+msgstr "'to.ref.white'는 다음의 정의와 일치하지 않습니다"
+
+msgid "color spaces use different reference whites."
+msgstr "색공간은 다른 기준백색을 사용합니다."
+
+msgid "'name' must be a character vector"
+msgstr "'name'은 반드시 문자형 벡터이어야 합니다"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "장치 1을 종료할 수 없습니다 (null 장치입니다)"
+
+msgid "cannot supply 'which' and 'device' at the same time"
+msgstr "'which'와 'device'를 동시에 제공할 수 없습니다"
+
+msgid "cannot copy from the null device"
+msgstr "null 장치로부터 복사할 수 없습니다"
+
+msgid "cannot copy to the null device"
+msgstr "null 장치에 복사할 수 없습니다"
+
+msgid "cannot copy device to itself"
+msgstr "장치를 동일한 장치에 복사할 수 없습니다"
+
+msgid "'device' should be a function"
+msgstr "'device'는 반드시 함수이어야 합니다"
+
+msgid "no device to print from"
+msgstr "다음으로부터 프린트 할 수 있는 장치가 없습니다"
+
+msgid "can only print from screen device"
+msgstr "스크린 장치로부터는 오로지 프린트만 할 수 있습니다"
+
+msgid "need to specify one of 'width' and 'height'"
+msgstr "'width'와 'height' 중 하나를 지정해야 합니다"
+
+msgid "can only print from a screen device"
+msgstr "스크린 장치로부터 인쇄밖에 할 수 없습니다"
+
+msgid "dev.control() called without an open graphics device"
+msgstr "열려있는 그래픽 장치가 없는데 dev.control()가 호출되었습니다"
+
+msgid "argument is missing with no default"
+msgstr "인수가 기본값 없이 누락되었습니다"
+
+msgid "dev.displaylist() called without an open graphics device"
+msgstr "열려 있는 그래픽 장치가 없는데 dev.displaylist()가 호출되었습니다"
+
+msgid "invalid setting for 'getOption(\"device\")'"
+msgstr "'getOption(\"device\")'에 설정오류"
+
+msgid "device '%s' not found"
+msgstr "장치 '%s'를 찾을 수 없습니다"
+
+msgid "no suitable unused file name for pdf()"
+msgstr "pdf()에 올바르게 사용하지 않은 파일명입니다"
+
+msgid "dev.new(): using pdf(file=\"%s\")"
+msgstr "dev.new(): pdf(file=\"%s\")를 사용합니다"
+
+msgid "no suitable unused file name for postscript()"
+msgstr "postscript()에 올바르게 사용하지 않은 파일명입니다"
+
+msgid "dev.new(): using postscript(file=\"%s\")"
+msgstr "dev.new(): postscript(file=\"%s\")를 사용합니다"
+
+msgid "invalid arguments in '%s' (need named args)"
+msgstr "'%s'에 잘못된 인수가 있습니다 (명명된 인수들이 필요합니다)"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "'name.opt'는 반드시 문자이며, 기존의 목록에 있는 이름이어야 합니다"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "존재하지 않는 '%s'를 재설정할 수 없습니다"
+
+msgid "invalid options in '%s'"
+msgstr "'%s'에 잘못된 옵션들이 있습니다"
+
+msgid "NOT changing"
+msgstr "변경하지 않습니다"
+
+msgid "argument 'append' is for back-compatibility and will be ignored"
+msgstr "argument 'append' is for back-compatibility and will be ignored"
+
+msgid "unknown family '%s'"
+msgstr "알 수 없는 페밀리 '%s'"
+
+msgid "invalid 'family' argument"
+msgstr "잘못된 'family' 인수입니다"
+
+msgid "invalid 'file'"
+msgstr "잘못된 'file'입니다"
+
+msgid "'maxRasters' is no longer needed, and will be ignored"
+msgstr "'maxRasters'는 더 이상 필요하지 않으며, 무시되어 질 것입니다"
+
+msgid "invalid PDF version"
+msgstr "잘못된 PDF 버전입니다"
+
+msgid "Invalid font type"
+msgstr "잘못된 글꼴 유형입니다"
+
+msgid "invalid family name in font specification"
+msgstr "글꼴 지정에 잘못된 페밀리명이 있습니다"
+
+msgid "invalid metric information in font specification"
+msgstr "글꼴 지정에 잘못된 메트릭 정보가 있습니다"
+
+msgid "invalid encoding in font specification"
+msgstr "글꼴지정에 잘못된 인코딩이 있습니다"
+
+msgid "Not a CID font"
+msgstr "CID 글꼴이 아닙니다"
+
+msgid "invalid CMap name in font specification"
+msgstr "글꼴지정에 잘못된 CMap 이름이 있습니다"
+
+msgid "invalid 'cmapEncoding' in font specification"
+msgstr "글꼴지정에 잘못된 'cmapEncoding'가 있습니다"
+
+msgid "invalid PDF resource in font specification"
+msgstr "글꼴지정에 잘못된 PDF 자원이 있습니다"
+
+msgid "Invalid font database name"
+msgstr "잘못된 글꼴 데이터베이스 이름입니다"
+
+msgid "font %s already in use"
+msgstr "글꼴 %s는 이미 사용중입니다"
+
+msgid "invalid arguments in '%s' (must be font names)"
+msgstr "'%s'내에 잘못된 인수가 있습니다 (반드시 글꼴이름이어야 합니다)"
+
+msgid "unknown font"
+msgstr "알 수 없는 글꼴입니다"
+
+msgid "font encoding mismatch '%s'/'%s'"
+msgstr "글꼴 인코딩이 일치하지 않습니다 '%s'/'%s'"
+
+msgid "'file' must be a non-empty character string"
+msgstr "'file'은 반드시 비어있는 문자열이어야 합니다"
+
+msgid "Invalid output format"
+msgstr "잘못된 출력형식입니다"
+
+msgid "status %d in running command '%s'"
+msgstr "명령 '%2$s'를 실행중 상태 %1$d입니다"
+
+msgid "range too small for min.n"
+msgstr "min.n에 대하여 너무 작은 범위입니다"
+
+msgid "A raster matrix must be character, or numeric, or logical"
+msgstr "래스터 행렬은 반드시 문자, 숫자, 또는 논리값이어야 합니다"
+
+msgid "A raster array must be numeric"
+msgstr "래스터 배열은 반드시 숫자이어야 합니다"
+
+msgid "A raster array must have exactly 3 dimensions"
+msgstr "래스터 배열은 반드시 3 차원을 가져야 합니다"
+
+msgid "A raster array must have exactly 3 or 4 planes"
+msgstr "래스터 배열은 반드시 3 또는 4 평면들을 가지고 있어야 합니다"
+
+msgid "'drop' is always implicitly FALSE in '[.raster'"
+msgstr "'[.raster'에서 'drop'은 항상 FALSE 입니다 "
+
+msgid "invalid raster subsetting"
+msgstr "잘못된 래스터 부분설정입니다"
+
+msgid "invalid raster subassignment"
+msgstr "잘못된 래스터 부분할당입니다"
+
+msgid "Operator not meaningful for raster objects"
+msgstr "래스터 객체들에 대해서 연산자는 무의미합니다"
+
+msgid "no current device to record from"
+msgstr "다음으로부터 기록할 수 있는 장치가 없습니다"
+
+msgid "argument is not of class \"recordedplot\""
+msgstr "인수는 클래스 \"recordedplot\"를 가지지 않습니다"
+
+msgid "loading snapshot from pre-2.0.0 R version"
+msgstr "R 2.0.0 이전 버전으로부터 스냅샷을 로딩하고 있습니다"
+
+msgid "loading snapshot from different R version"
+msgstr "다른 R 버전으로부터 스냅샷을 로드하고 있습니다"
+
+msgid "'nbin' must be numeric of length 1 or 2"
+msgstr "'nbin'은 반드시 길이 1 또는 2의 숫자이어야 합니다"
+
+msgid "'bandwidth' must be numeric"
+msgstr "'bandwidth'은 반드시 숫자이어야 합니다"
+
+msgid "'bandwidth' must be positive"
+msgstr "'bandwidth'은 반드시 양수이어야 합니다"
+
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "'r'은 반드시 \"range\"내에 있어야 합니다, 따라서 길이는 2입니다"
+
+msgid "invalid first argument"
+msgstr "첫번째 인수가 잘못되었습니다"
+
+msgid "'x' is a list, but does not have components 'x' and 'y'"
+msgstr "'x'는 리스트입니다, 그러나 구성요소 'x'와 'y'를 가지고 있지 않습니다"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "'x'와 'y'의 길이가 다릅니다"
+
+msgid "invalid first argument [bad language object]"
+msgstr "첫번째 인수가 잘못되었습니다 [잘못된 언어 객체입니다]"
+
+msgid "at least 2 columns needed"
+msgstr "최소한 2개의 열들이 필요합니다"
+
+msgid "'x' is a list, but does not have components 'x', 'y'  and 'z'"
+msgstr "'x'는 리스트입니다, 그러나 구성요소 'x', 'y'  그리고 'z'를 가지고 있지 않습니다"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "'x', 'y' 그리고 'z'의 길이가 다릅니다"
+
+msgid "'file' is missing with no default"
+msgstr "'file'은 기본값 없이 누락되었습니다"
+
+msgid "sorry, 'gs' cannot be found"
+msgstr "죄송합니다, 'gs'를 찾을 수 없습니다"
+
+msgid "unrecognized format of gs -help"
+msgstr "gs -help는 알 수 없는 형식입니다"
+
+msgid "device '%s' is not available"
+msgstr "장치 '%s'는 사용할 수 없습니다"
+
+msgid "Available devices are %s"
+msgstr "이용가능한 장치들은 %s입니다"
+
+msgid "'res' must be specified unless 'units = \"px\"'"
+msgstr "만약 'units = \"px\"'이 아니라면 'res'는 반드시 지정되어야 합니다"
+
+msgid "invalid 'title'"
+msgstr "잘못된 'title'입니다"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "잘못된 Quartz 글꼴입니다:  반드시 4 개의 문자열들이어야 합니다"
+
+msgid "invalid arguments in quartzFonts (must be font names)"
+msgstr "quartzFonts에 잘못된 인수가 있습니다 (반드시 글꼴이름이어야 합니다)"
+
+msgid "invalid arguments in quartzFonts (need named args)"
+msgstr "quartzFonts에 잘못된 인수들이 있습니다 (명명된 인수들이 필요합니다)"
+
+msgid "cairo-based types are not supported on this build - using \"Xlib\""
+msgstr "이 빌드는 cairo-기반의 종류들을 지원하지 않습니다 - \"Xlib\"를 사용합니다"
+
+msgid "unknown family for X11(type = \"XLib\")"
+msgstr "X11(type = \"XLib\")에 대하여 알 수 없는 페밀리입니다"
+
+msgid "invalid X11 font specification:"
+msgstr "잘못된 X11 글꼴지정입니다:"
+
+msgid "no such device"
+msgstr "그런 장치가 없습니다"
+
+msgid "can only copy from 'X11(type=\"*cairo\")' devices"
+msgstr "'X11(type=\"*cairo\")' 장치로부터 오로지 복사만을 할 수 있습니다"
+
+msgid "invalid value for 'rescale'"
+msgstr "'rescale'의 값이 잘 못 되었습니다"
+
+msgid "can only bring windows devices to the front"
+msgstr "윈도우즈 장치들만을 정면으로 가져올 수 있습니다"
+
+msgid "'type' not applicable to the R console"
+msgstr "'type'은 R 콘솔에 적용할 수 없습니다"
+
+msgid "can only manipulate windows devices"
+msgstr "윈도우즈 장치들만을 사용할 수 있습니다"
+
+msgid "can only copy from 'windows' devices"
+msgstr "'windows' 장치들로부터 오로지 복사만을 할 수 있습니다"
+
+msgid "subscript out of range"
+msgstr "첨자가 범위를 벗어났습니다"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr "잘못된 윈도우즈 글꼴: 반드시 단일 글꼴 페밀리 이름이어야 합니다"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "'windowsFonts'에 잘못된 인수들이 있습니다 (반드시 글꼴 이름들이어야 합니다)"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "'windowsFonts'에 잘못된 인수들이 있습니다 (명명된 인수들이 필요합니다)"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "'%2$s'내에 잘못된 인수 이름들 %1$s이 있습니다"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "새 것과 이전 것들 사이에 다른점들이 있습니다"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "음의 값을 가지는 %d개의 x 값들은 로그 플랏에서 제외되었습니다"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "음의 값을 가지는 %d개의 y 값들은 로그 플랏에서 제외되었습니다"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "음의 값을 가지는 %d개의 z 값들은 로그 플랏에서 제외되었습니다"
+
+#~ msgid "quartz() device interactivity reduced without an event loop manager"
+#~ msgstr ""
+#~ "quartz() 디바이스는 event loop manager가 없으므로 쌍방향으로 감소해졌습니"
+#~ "다"
