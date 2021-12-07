@@ -24,14 +24,15 @@ RUN apt-get -y install libbz2-dev
 RUN apt-get -y install libpcre3-dev
 RUN aptitude -y install libreadline-dev
 RUN apt-get -y install libcurl4-openssl-dev
-
+RUN apt-get -y install libcairo2-dev
+RUN apt-get -y install libxt-dev
 COPY pcre2-10.37.tar.gz /tmp/prec/
 RUN tar -zxvf /tmp/prec/pcre2-10.37.tar.gz
 RUN /pcre2-10.37/configure
 RUN make -j 24
 RUN make install
 RUN chmod +x /tmp/configure
-RUN /tmp/configure
+RUN /tmp/configure --with-x=yes
 RUN make
 RUN make install
 COPY p7zip_16.02 /tmp/

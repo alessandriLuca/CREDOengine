@@ -21,5 +21,7 @@ echo 'install.packages("IRkernel", repos="http://cran.us.r-project.org")' > ./$2
 echo 'IRkernel::installspec()' >> ./$2/rscript.R
 echo 'COPY rscript.R /home/' >> ./$2/Dockerfile
 echo 'RUN Rscript /home/rscript.R' >> ./$2/Dockerfile
+echo 'COPY Rprofile /root/.Rprofile' >> ./$2/Dockerfile
 cat ./tail >> ./$2/Dockerfile
 chmod +x ./$2/script.sh
+cp ./Rprofile ./$2/
