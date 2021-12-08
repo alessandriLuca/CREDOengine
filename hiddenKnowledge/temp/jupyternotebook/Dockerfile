@@ -29,7 +29,7 @@ RUN apt-get -y install libnss3
 RUN apt-get -y install libclang-dev
 RUN apt-get -y install libxkbcommon-x11-0
 RUN apt-get -y install libpq5
-RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuAY8dtDM+/IlZBQLv4mOnw5fb2rNmLksjxm/plVm4d9KqRHaumSPlkexqxYurT83vRB3X69v70b8OMBKzFZ8O9hBiTX0xbGgWiORHcSou9n6rXoG0yw4QiGM2542tlXMAIQLiZ2czK/UHGQsPuFGdDsH7KhPX3VydpoujJjHplgpQO0xZw2oP+X6CKiXTgfg5/Di1RZUSjtkKZeoJZkN7FT1HM4WKeM9Yjl4oy6WI29HAi7sDWIDEPsbkkKDAIpUoyhVlT1al2a97c4+w+Q1//z0yF+GflErSkHSNCCHxQ96HfuO+ZWzu8clFGwq/hPPb6KTFcxBe1y2/laCOd+yU4eHWlU40BXszqw1HFM6a7S+ELScCndiWTJpwP+ciU79iA8xDhmFIfhPDz9T5v+LSdnWEhZuUSHDw8/I9jJUe0oxpjT+pMCIydemWTMwu6aZ5l5AcVE62vQcgtbQOS+eHkW3kiEJZe5FHeLjMpYGL1Wgwp50mOegglTzMDMM0eok= user@gianluca" >> /root/.ssh/authorized_keys
+RUN echo "kiave" >> /root/.ssh/authorized_keys
 RUN apt-get update \
     && apt-get -y install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget \
     && apt-get -y install libblas-dev liblapack-dev \
