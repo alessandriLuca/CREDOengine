@@ -12,7 +12,7 @@ do
 cp -r ./$V/* ./$1
 done
 
-echo "FROM library/ubuntu as UBUNTU_BASE
+echo "FROM library/ubuntu:20.04 as UBUNTU_BASE
 MAINTAINER alessandri.luca1991@gmail.com
 ARG DEBIAN_FRONTEND=noninteractive" > ./$1/Dockerfile
 for V in $VARIABLE

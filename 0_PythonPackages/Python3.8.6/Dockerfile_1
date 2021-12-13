@@ -1,4 +1,4 @@
-FROM library/ubuntu as UBUNTU_BASE
+FROM library/ubuntu:20.04 as UBUNTU_BASE
 MAINTAINER alessandri.luca1991@gmail.com
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \

@@ -1,4 +1,4 @@
-FROM library/ubuntu:18.04 as UBUNTU_BASE
+FROM library/ubuntu:20.04 as UBUNTU_BASE
 ARG DEBIAN_FRONTEND=noninteractive
 LABEL maintainer="alessandri.luca1991@gmail.com"
 RUN apt-get update
