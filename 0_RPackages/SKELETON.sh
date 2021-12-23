@@ -43,20 +43,20 @@ fi
 #docker rmi -f $1
 mv Dockerfile_1 Dockerfile
 docker build . -t $1
-cp -R ./R-3.0.3_toBeInstalled $pathSharedfoldDock
-cp configurationFile.R $pathSharedfoldDock/R-3.0.3_toBeInstalled/libraryInstall.R
-docker run -itv $pathSharedfoldHost/R-3.0.3_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
+cp -R ./JENNIFER_toBeInstalled $pathSharedfoldDock
+cp configurationFile.R $pathSharedfoldDock/JENNIFER_toBeInstalled/libraryInstall.R
+docker run -itv $pathSharedfoldHost/JENNIFER_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
 mv Dockerfile Dockerfile_2
 mkdir $2
 cp Dockerfile_2 ./$2/Dockerfile
-cp -r ./R-3.0.3 ./$2/
-mkdir ./$2/R-3.0.3_toBeInstalled
-cp $pathSharedfoldDock/R-3.0.3_toBeInstalled/*.7z* ./$2/R-3.0.3_toBeInstalled/
+cp -r ./JENNIFER ./$2/
+mkdir ./$2/JENNIFER_toBeInstalled
+cp $pathSharedfoldDock/JENNIFER_toBeInstalled/*.7z* ./$2/JENNIFER_toBeInstalled/
 cp ./pcre2-10.37.tar.gz ./$2/pcre2-10.37.tar.gz
 cp -r ./p7zip_16.02 ./$2/
-cp -r $pathSharedfoldDock/R-3.0.3_toBeInstalled/ ./$2/
+cp -r $pathSharedfoldDock/JENNIFER_toBeInstalled/ ./$2/
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
 rm -r $pathSharedfoldDock
 #docker rmi -f $1

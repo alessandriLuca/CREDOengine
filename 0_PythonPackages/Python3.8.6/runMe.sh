@@ -1,37 +1,62 @@
-#!/bin/bash 
+#!/bin/bash
 if [ $# -eq 0 ]
   then
-    echo "You need to provide a docker tag and a $2 name, for example ./buildMe.sh dockertest tempFolder"
+    echo "You need to provide a docker temporary tag a final name and a temporary folder path. For windows add also the host path to a file containing the sharedFolder path. for example ./buildMe.sh dockertest resultDockerfile /home/user/temporaryFolder"
     exit
 fi
 
 if [ $# -eq 1 ]
   then
-    echo "You need to provide a docker tag and a $2 name, for example ./buildMe.sh dockertest tempFolder"
+    echo "You need to provide a docker temporary tag a final name and a temporary folder path. For windows add also the host path to the sharedFolder. for example ./buildMe.sh dockertest resultDockerfile /home/user/temporaryFolder"
     exit
 fi
- docker rmi -f $1
+
+if [ $# -eq 2 ]
+  then
+    echo "You need to provide a docker temporary tag a final name and a temporary folder path. For windows add also the host path to the sharedFolder. for example ./buildMe.sh dockertest resultDockerfile /home/user/temporaryFolder"
+    exit
+fi
+
+if [ $# -eq 3 ]
+then
+echo "hope you are on IOS or Linux"
+pathSharedfoldDock=$3
+pathSharedfoldHost=$3
+mkdir $pathSharedfoldDock
+echo "hey"
+fi
+
+if [ $# -eq 4 ]
+then
+echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
+pathSharedfoldDock=$3
+somedirpath=$(cat $4)
+pathSharedfoldHost="$somedirpath"/"$( basename "$pathSharedfoldDock" )"
+echo $pathSharedfoldHost
+mkdir $pathSharedfoldDock
+
+fi
+
+
+#temp finalName tempFolder-> /sharedFolder pathToTempFolderOnHost-> Leggi da file
+
+docker rmi -f $1
 mv Dockerfile_1 Dockerfile
- docker build . -t $1
-cp configurationFile.sh ./Python3.8.6_toBeInstalled/
- docker run -itv $(pwd)/Python3.8.6_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
+docker build . -t $1
+cp -R ./Python3.8.6_toBeInstalled $pathSharedfoldDock
+cp configurationFile.sh $pathSharedfoldDock/Python3.8.6_toBeInstalled/configurationFile.sh
+docker run -itv $pathSharedfoldHost/Python3.8.6_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
- docker build . -t $1
 mv Dockerfile Dockerfile_2
-mkdir $2 
+mkdir $2
 cp Dockerfile_2 ./$2/Dockerfile
 cp Python-3.8.6.tgz ./$2/
 mkdir ./$2/Python3.8.6_toBeInstalled
-cp ./Python3.8.6_toBeInstalled/*.7z* ./$2/Python3.8.6_toBeInstalled/
+cp $pathSharedfoldDock/Python3.8.6_toBeInstalled/*.7z* ./$2/Python3.8.6_toBeInstalled/
 cp ./pipdeptree-2.1.0-py3-none-any.whl ./$2/
 cp -r ./p7zip_16.02 ./$2/
-cp ./Python3.8.6_toBeInstalled/listForDockerfile.sh ./$2/Python3.8.6_toBeInstalled/listForDockerfile.sh
-rm ./Python3.8.6_toBeInstalled/*.txt
-rm ./Python3.8.6_toBeInstalled/*.log
-rm ./Python3.8.6_toBeInstalled/*.7z*
-rm -r ./Python3.8.6_toBeInstalled/packages
-rm ./Python3.8.6_toBeInstalled/listForDockerfile.sh
-rm ./Python3.8.6_toBeInstalled/configurationFile.sh
-echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.'
- docker rmi -f $1
+cp -r $pathSharedfoldDock/Python3.8.6_toBeInstalled/ ./$2/
+echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
+rm -r $pathSharedfoldDock
+docker rmi -f $1
