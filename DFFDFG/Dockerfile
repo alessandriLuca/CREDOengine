@@ -95,6 +95,7 @@ RUN /tmp/listForDockerfileR.sh
 COPY rscript.R /home/
 RUN Rscript /home/rscript.R
 COPY Rprofile /root/.Rprofile
+ENV SHELL=/bin/bash
 CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]
 
 RUN apt-get install -y \
