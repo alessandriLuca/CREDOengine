@@ -111,5 +111,6 @@ RUN apt-get update
 RUN apt-get install -y docker-ce docker-ce-cli containerd.io
 RUN newgrp docker
 RUN apt-get install -y  nodejs npm ufw
-#sRUN cd /home && git clone https://github.com/alessandriLuca/dockerFileGenerator
+RUN cd /home && git clone https://github.com/alessandriLuca/dockerFileGenerator
 EXPOSE 3000
+ENV SHELL=/bin/bash

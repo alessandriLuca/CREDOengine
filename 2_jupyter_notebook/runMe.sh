@@ -1,5 +1,5 @@
 #!/bin/bash 
-if [ $# -ne 4 ] &  [ $# -ne 5 ]
+if [ $# -ne 4 ] &&  [ $# -ne 5 ]
   then
     echo "You need to provide :"
         echo " The folderName of the mergedDockers  "
@@ -7,7 +7,7 @@ if [ $# -ne 4 ] &  [ $# -ne 5 ]
     echo " DockerName to build the new docker container "
         echo " A temporary folder path "
     echo "Path to a file containing the hostPath, for Indocker user only "
-
+   echo $#
     exit
 fi
 
@@ -66,22 +66,32 @@ echo 'IRkernel::installspec()' >> $pathSharedfoldDock/$1_jupyter/rscript.R
 echo 'COPY rscript.R /home/' >> $pathSharedfoldDock/$1_jupyter/Dockerfile
 echo 'RUN Rscript /home/rscript.R' >> $pathSharedfoldDock/$1_jupyter/Dockerfile
 echo 'COPY Rprofile /root/.Rprofile' >> $pathSharedfoldDock/$1_jupyter/Dockerfile
+echo 'ENV SHELL=/bin/bash'  >> $pathSharedfoldDock/$1_jupyter/Dockerfile
 cat ./tail >> $pathSharedfoldDock/$1_jupyter/Dockerfile
+
 cp ./configurationFile.txt $pathSharedfoldDock/$1_jupyter/
-echo "docker build . -t "$3 > $pathSharedfoldDock/$1_jupyter/script.sh
-tt=$(cat configurationFile.txt)
-echo "mkdir "$tt  >> $pathSharedfoldDock/$1_jupyter/script.sh
-echo "cp ./configurationFile.txt "$tt >> $pathSharedfoldDock/$1_jupyter/script.sh
-echo "docker run -itv "$tt"/:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true -p  8888:8888 "$3 >> $pathSharedfoldDock/$1_jupyter/script.sh
+
+
+echo "docker build . -t " $3  > $pathSharedfoldDock/$1_jupyter/script.sh
+echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/$1_jupyter/script.sh
+echo "mkdir \$tt" >> $pathSharedfoldDock/$1_jupyter/script.sh
+echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/$1_jupyter/script.sh
+echo "rm \$tt\id.txt" >> $pathSharedfoldDock/$1_jupyter/script.sh
+echo "docker run -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt\id.txt --privileged=true -p  8888:8888 "$3  >> $pathSharedfoldDock/$1_jupyter/script.sh
 chmod +x $pathSharedfoldDock/$1_jupyter/script.sh
 
 
-echo "docker build . -t "$3 > $pathSharedfoldDock/$1_jupyter/script.cmd
-tt=$(cat configurationFile.txt)
-echo "mkdir "$tt >> $pathSharedfoldDock/$1_jupyter/script.cmd
-echo "cp ./configurationFile.txt "$tt >> $pathSharedfoldDock/$1_jupyter/script.cmd
-echo "docker run -itv "$tt"/:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true -p  8888:8888 "$3 >> $pathSharedfoldDock/$1_jupyter/script.cmd
-chmod +x $pathSharedfoldDock/$1_jupyter/script.cmd
+
+
+
+echo "docker build . -t " $3  > $pathSharedfoldDock/$1_jupyter/script.cmd
+echo "set /p Build=<configurationFile.txt" >> $pathSharedfoldDock/$1_jupyter/script.cmd
+echo "mkdir %Build%"  >> $pathSharedfoldDock/$1_jupyter/script.cmd
+echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/$1_jupyter/script.cmd
+echo "del %Build%\id.txt"  >> $pathSharedfoldDock/$1_jupyter/script.cmd
+echo "docker run -itv %Build%:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt  -p  8888:8888 "$3  >> $pathSharedfoldDock/$1_jupyter/script.cmd
+
+
 
 
 
