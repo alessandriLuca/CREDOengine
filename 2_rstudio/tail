@@ -1,2 +1,7 @@
-CMD ["jupyter", "lab", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]
 
+COPY rstudioServer /rstudioServer
+RUN cd /rstudioServer/ && 7za -y x "*.7z*"
+RUN apt-get install -y psmisc libapparmor1 sudo libclang-dev libpq5 gdebi-core
+RUN gdebi /rstudioServer/rstudio-server-2021.09.1-372-amd64.deb
+ENV USER=rstudio
+#CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize", "0", "--auth-none", "1"]

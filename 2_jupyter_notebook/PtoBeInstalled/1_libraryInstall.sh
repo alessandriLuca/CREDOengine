@@ -16,6 +16,9 @@ do
 a=$(grep $(awk -v c=$VARIABLE 'NR==c { print $VARIABLE }' /scratch/out.txt | sed 's/ //g' | sed -r 's/[-]+/_/g' | sed -r 's/[==]+/-/g') <<< $list)
 if [[ -n "$a" ]] ; then echo 'pip3 install --no-dependencies /tmp/packages/'$a >> scratch/listForDockerfileP.sh ; fi
 done
+awk '!visited[$0]++' /scratch/listForDockerfileP.sh > /scratch/listForDockerfileP2.sh
+rm /scratch/listForDockerfileP.sh
+mv /scratch/listForDockerfileP2.sh /scratch/listForDockerfileP.sh
 chmod 777 /scratch/listForDockerfileP.sh
 7za -v25165824 a /scratch/install_filesP.7z /scratch/packages
 chmod -R 777 /scratch/
