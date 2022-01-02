@@ -70,6 +70,7 @@ echo 'ENV SHELL=/bin/bash'  >> $pathSharedfoldDock/$1_jupyter/Dockerfile
 cat ./tail >> $pathSharedfoldDock/$1_jupyter/Dockerfile
 
 cp ./configurationFile.txt $pathSharedfoldDock/$1_jupyter/
+cp ./run.exe $pathSharedfoldDock/$1_jupyter/
 
 
 echo "docker build . -t " $3  > $pathSharedfoldDock/$1_jupyter/script.sh

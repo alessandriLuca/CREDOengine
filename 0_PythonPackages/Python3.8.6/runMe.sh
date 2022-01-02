@@ -40,7 +40,7 @@ fi
 
 #temp finalName tempFolder-> /sharedFolder pathToTempFolderOnHost-> Leggi da file
 
-docker rmi -f $1
+#docker rmi -f $1
 mv Dockerfile_1 Dockerfile
 docker build . -t $1
 cp -R ./Python3.8.6_toBeInstalled $pathSharedfoldDock
@@ -56,7 +56,12 @@ mkdir ./$2/Python3.8.6_toBeInstalled
 cp $pathSharedfoldDock/Python3.8.6_toBeInstalled/*.7z* ./$2/Python3.8.6_toBeInstalled/
 cp ./pipdeptree-2.1.0-py3-none-any.whl ./$2/
 cp -r ./p7zip_16.02 ./$2/
+rm -r $pathSharedfoldDock/Python3.8.6_toBeInstalled/packages
+rm $pathSharedfoldDock/Python3.8.6_toBeInstalled/1_libraryInstall.sh
+rm $pathSharedfoldDock/Python3.8.6_toBeInstalled/configurationFile.sh
+rm $pathSharedfoldDock/Python3.8.6_toBeInstalled/*.txt
+rm $pathSharedfoldDock/Python3.8.6_toBeInstalled/*.log
 cp -r $pathSharedfoldDock/Python3.8.6_toBeInstalled/ ./$2/
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
 rm -r $pathSharedfoldDock
-docker rmi -f $1
+#docker rmi -f $1

@@ -40,7 +40,7 @@ fi
 
 #temp finalName tempFolder-> /sharedFolder pathToTempFolderOnHost-> Leggi da file
 
-docker rmi -f $1
+#docker rmi -f $1
 mv Dockerfile_1 Dockerfile
 docker build . -t $1
 cp -R ./R-4.1.1_toBeInstalled $pathSharedfoldDock
@@ -56,7 +56,13 @@ mkdir ./$2/R-4.1.1_toBeInstalled
 cp $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.7z* ./$2/R-4.1.1_toBeInstalled/
 cp ./pcre2-10.37.tar.gz ./$2/pcre2-10.37.tar.gz
 cp -r ./p7zip_16.02 ./$2/
+rm -r $pathSharedfoldDock/R-4.1.1_toBeInstalled/packages
+rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/1_libraryInstall.sh
+rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/dockerFileGenerator.R
+rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/libraryInstall.R
+rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.txt
+rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.out
 cp -r $pathSharedfoldDock/R-4.1.1_toBeInstalled/ ./$2/
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
 rm -r $pathSharedfoldDock
-docker rmi -f $1
+#docker rmi -f $1

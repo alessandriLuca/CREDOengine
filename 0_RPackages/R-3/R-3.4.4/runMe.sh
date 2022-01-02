@@ -56,6 +56,12 @@ mkdir ./$2/R-3.4.4_toBeInstalled
 cp $pathSharedfoldDock/R-3.4.4_toBeInstalled/*.7z* ./$2/R-3.4.4_toBeInstalled/
 cp ./pcre2-10.37.tar.gz ./$2/pcre2-10.37.tar.gz
 cp -r ./p7zip_16.02 ./$2/
+rm -r $pathSharedfoldDock/R-3.4.4_toBeInstalled/packages
+rm $pathSharedfoldDock/R-3.4.4_toBeInstalled/1_libraryInstall.sh
+rm $pathSharedfoldDock/R-3.4.4_toBeInstalled/dockerFileGenerator.R
+rm $pathSharedfoldDock/R-3.4.4_toBeInstalled/libraryInstall.R
+rm $pathSharedfoldDock/R-3.4.4_toBeInstalled/*.txt
+rm $pathSharedfoldDock/R-3.4.4_toBeInstalled/*.out
 cp -r $pathSharedfoldDock/R-3.4.4_toBeInstalled/ ./$2/
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
 rm -r $pathSharedfoldDock
