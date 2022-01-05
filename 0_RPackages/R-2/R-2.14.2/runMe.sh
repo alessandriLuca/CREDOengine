@@ -45,7 +45,7 @@ mv Dockerfile_1 Dockerfile
 docker build . -t $1
 cp -R ./R-2.14.2_toBeInstalled $pathSharedfoldDock
 cp configurationFile.R $pathSharedfoldDock/R-2.14.2_toBeInstalled/libraryInstall.R
-docker run -v $pathSharedfoldHost/R-2.14.2_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
+docker run -tv $pathSharedfoldHost/R-2.14.2_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
 mv Dockerfile Dockerfile_2

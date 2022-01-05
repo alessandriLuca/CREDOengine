@@ -43,7 +43,7 @@ cp -r ./$1/* $pathSharedfoldDock/$1_jupyter_notebook
 cp -r RtoBeInstalled $pathSharedfoldDock/$1_jupyter_notebook/
 docker build $pathSharedfoldDock/$1_jupyter_notebook -t $2
 cp -r ./PtoBeInstalled $pathSharedfoldDock/$1_jupyter_notebook/
-docker run -v $pathSharedfoldHost/$1_jupyter_notebook/PtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
+docker run -tv $pathSharedfoldHost/$1_jupyter_notebook/PtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 #cp $(pwd)/$1_jupyter_notebook/PtoBeInstalled/install_filesP* $(pwd)/$1_jupyter_notebook/   #NOOOOOOOOOOO
 #cp $(pwd)/$1_jupyter_notebook/PtoBeInstalled/listForDockerfileP.sh $(pwd)/$1_jupyter_notebook/    # NOOOOOOOOOOOOO
 echo 'COPY PtoBeInstalled/install_filesP* /tmp/' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
@@ -51,7 +51,7 @@ echo 'RUN cd /tmp/ && 7za -y x "install_filesP.7z*"' >> $pathSharedfoldDock/$1_j
 echo 'COPY PtoBeInstalled/listForDockerfileP.sh /tmp/ ' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
 echo 'RUN /tmp/listForDockerfileP.sh ' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
 docker build $pathSharedfoldDock/$1_jupyter_notebook -t $2
-docker run -v $pathSharedfoldHost/$1_jupyter_notebook/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
+docker run -tv $pathSharedfoldHost/$1_jupyter_notebook/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 #cp $(pwd)/$1_jupyter_notebook/RtoBeInstalled/install_filesR* $(pwd)/$1_jupyter_notebook/
 #cp $(pwd)/$1_jupyter_notebook/RtoBeInstalled/listForDockerfileR.sh $(pwd)/$1_jupyter_notebook/
 echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
