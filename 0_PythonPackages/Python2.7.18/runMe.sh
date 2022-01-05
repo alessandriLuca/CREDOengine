@@ -45,7 +45,7 @@ mv Dockerfile_1 Dockerfile
 docker build . -t $1
 cp -R ./Python2.7.18_toBeInstalled $pathSharedfoldDock
 cp configurationFile.sh $pathSharedfoldDock/Python2.7.18_toBeInstalled/configurationFile.sh
-docker run -itv $pathSharedfoldHost/Python2.7.18_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
+docker run -v $pathSharedfoldHost/Python2.7.18_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
 mv Dockerfile Dockerfile_2

@@ -41,7 +41,7 @@ cp -r ./configs $pathSharedfoldDock/$1_rstudio/
 
 cp -r RtoBeInstalled $pathSharedfoldDock/$1_rstudio/
 docker build $pathSharedfoldDock/$1_rstudio -t $2
-docker run -itv $pathSharedfoldHost/$1_rstudio/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
+docker run -v $pathSharedfoldHost/$1_rstudio/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/$1_rstudio/Dockerfile
 echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/$1_rstudio/Dockerfile
 echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/$1_rstudio/Dockerfile
