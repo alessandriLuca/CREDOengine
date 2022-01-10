@@ -1,8 +1,0 @@
-trying URL 'http://cran.us.r-project.org/src/contrib/rprojroot_2.0.2.tar.gz'
-trying URL 'http://cran.us.r-project.org/src/contrib/Rcpp_1.0.7.tar.gz'
-trying URL 'http://cran.us.r-project.org/src/contrib/here_1.0.1.tar.gz'
-trying URL 'http://cran.us.r-project.org/src/contrib/jsonlite_1.7.2.tar.gz'
-trying URL 'http://cran.us.r-project.org/src/contrib/png_0.1-7.tar.gz'
-trying URL 'http://cran.us.r-project.org/src/contrib/rappdirs_0.3.3.tar.gz'
-trying URL 'http://cran.us.r-project.org/src/contrib/withr_2.4.3.tar.gz'
-trying URL 'http://cran.us.r-project.org/src/contrib/reticulate_1.22.tar.gz'
