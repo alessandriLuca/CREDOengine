@@ -116,4 +116,5 @@ EXPOSE 3000
 ENV SHELL=/bin/bash
 RUN cd /home && git clone https://github.com/alessandriLuca/dockerFileGenerator
 RUN rm /*.tar.gz
-
+COPY nodejs /nodejs/
+CMD ["node","/nodejs/GUI.js"]
