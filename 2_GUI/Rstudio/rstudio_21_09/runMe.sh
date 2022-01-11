@@ -38,17 +38,33 @@ mkdir $pathSharedfoldDock/$1_rstudio
 cp -r ./$1/* $pathSharedfoldDock/$1_rstudio
 cp -r ./rstudioServer $pathSharedfoldDock/$1_rstudio/
 
-cp -r RtoBeInstalled $pathSharedfoldDock/$1_rstudio/
-docker build $pathSharedfoldDock/$1_rstudio -t $2
-docker run -tv $pathSharedfoldHost/$1_rstudio/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
-echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/$1_rstudio/Dockerfile
-echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/$1_rstudio/Dockerfile
-echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/$1_rstudio/Dockerfile
-echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/$1_rstudio/Dockerfile
-
-
-
 
 cat ./tail >> $pathSharedfoldDock/$1_rstudio/Dockerfile
-echo "docker run  -p 127.0.0.1:8787:8787   -e DISABLE_AUTH=true  "$3 > $pathSharedfoldDock/$1_rstudio/script.sh
+
+
+cp ./configurationFile.txt $pathSharedfoldDock/$1_rstudio/
+cp ./run.exe $pathSharedfoldDock/$1_rstudio/
+cp ./rserver.conf $pathSharedfoldDock/$1_rstudio/
+cp ./cc.R $pathSharedfoldDock/$1_rstudio/cc.R
+echo "docker build . -t " $3  > $pathSharedfoldDock/$1_rstudio/script.sh
+echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/$1_rstudio/script.sh
+echo "mkdir \$tt" >> $pathSharedfoldDock/$1_rstudio/script.sh
+echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/$1_rstudio/script.sh
+echo "rm \$tt\id.txt" >> $pathSharedfoldDock/$1_rstudio/script.sh
+echo "docker run -itv \$tt:/home/rstudio/ -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt\id.txt --privileged=true -p 8888:8888   -e DISABLE_AUTH=true "$3  >> $pathSharedfoldDock/$1_rstudio/script.sh
 chmod +x $pathSharedfoldDock/$1_rstudio/script.sh
+
+
+
+
+
+echo "docker build . -t " $3  > $pathSharedfoldDock/$1_rstudio/script.cmd
+echo "set /p Build=<configurationFile.txt" >> $pathSharedfoldDock/$1_rstudio/script.cmd
+echo "mkdir %Build%"  >> $pathSharedfoldDock/$1_rstudio/script.cmd
+echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/$1_rstudio/script.cmd
+echo "del %Build%\id.txt"  >> $pathSharedfoldDock/$1_rstudio/script.cmd
+echo "docker run -itv %Build%:/home/rstudio/ -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt -p 8888:8888   -e DISABLE_AUTH=true "$3  >> $pathSharedfoldDock/$1_rstudio/script.cmd
+
+chmod +x $pathSharedfoldDock/$1_rstudio/script.sh
+cp -r $pathSharedfoldDock/$1_rstudio/ .
+rm -r $pathSharedfoldDock/$1_rstudio/
