@@ -1,24 +1,6 @@
-
 COPY visualStudio /visualStudio
 RUN cd /visualStudio/ && 7za -y x "*.7z*"
-#RUN apt-get install -y psmisc libapparmor1 sudo libclang-dev libpq5
-#RUN dpkg -i /rstudioServer/rstudio-server-2021.09.1-372-amd64.deb
-
-RUN echo "PATH=${PATH}" >> /usr/local/lib/R/etc/Renviron \
-  && useradd rstudio \
-  && echo "rstudio:rstudio" | chpasswd \
-	&& mkdir /home/rstudio \
-	&& chown rstudio:rstudio /home/rstudio \
-	&& addgroup rstudio staff \
-  &&  echo 'rsession-which-r=/usr/local/bin/R' >> /etc/rstudio/rserver.conf \
-  && echo 'lock-type=advisory' >> /etc/rstudio/file-locks \
-
-
-EXPOSE 8787
-
-ENV USER=rstudio
-COPY rserver.conf /etc/rstudio/rserver.conf
-RUN rstudio-server verify-installation
-COPY cc.R /cc.R
-RUN Rscript /cc.R
-CMD ["/usr/lib/rstudio-server/bin/rserver", "--server-daemonize", "0", "--auth-none", "1"]
+RUN dpkg -i /visualStudio/visualStudio/*.deb
+COPY config.yaml ~/.config/code-server/config.yaml
+EXPOSE 8080
+CMD ["code-server","--auth","none"]

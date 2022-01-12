@@ -44,12 +44,13 @@ cat ./tail >> $pathSharedfoldDock/$1_visualStudio/Dockerfile
 
 cp ./configurationFile.txt $pathSharedfoldDock/$1_visualStudio/
 cp ./run.exe $pathSharedfoldDock/$1_visualStudio/
+cp ./config.yaml $pathSharedfoldDock/$1_visualStudio/
 echo "docker build . -t " $3  > $pathSharedfoldDock/$1_visualStudio/script.sh
 echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/$1_visualStudio/script.sh
 echo "mkdir \$tt" >> $pathSharedfoldDock/$1_visualStudio/script.sh
 echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/$1_visualStudio/script.sh
 echo "rm \$tt\id.txt" >> $pathSharedfoldDock/$1_visualStudio/script.sh
-echo "docker run -itv \$tt:/home/visualStudio/ -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt\id.txt --privileged=true -p 8888:8888   -e DISABLE_AUTH=true "$3  >> $pathSharedfoldDock/$1_visualStudio/script.sh
+echo "docker run -itv \$tt:/home/visualStudio/ -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt\id.txt --privileged=true -p 8888:8888 --network host  -e DISABLE_AUTH=true "$3  >> $pathSharedfoldDock/$1_visualStudio/script.sh
 chmod +x $pathSharedfoldDock/$1_visualStudio/script.sh
 
 
@@ -61,7 +62,7 @@ echo "set /p Build=<configurationFile.txt" >> $pathSharedfoldDock/$1_visualStudi
 echo "mkdir %Build%"  >> $pathSharedfoldDock/$1_visualStudio/script.cmd
 echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/$1_visualStudio/script.cmd
 echo "del %Build%\id.txt"  >> $pathSharedfoldDock/$1_visualStudio/script.cmd
-echo "docker run -itv %Build%:/home/visualStudio/ -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt -p 8888:8888   -e DISABLE_AUTH=true "$3  >> $pathSharedfoldDock/$1_visualStudio/script.cmd
+echo "docker run -itv %Build%:/home/visualStudio/ -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt -p 8888:8888 --network host  -e DISABLE_AUTH=true "$3  >> $pathSharedfoldDock/$1_visualStudio/script.cmd
 
 chmod +x $pathSharedfoldDock/$1_visualStudio/script.sh
 cp -r $pathSharedfoldDock/$1_visualStudio/ .
