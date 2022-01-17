@@ -62,7 +62,7 @@ rm $pathSharedfoldDock/R-3.6.3_toBeInstalled/dockerFileGenerator.R
 rm $pathSharedfoldDock/R-3.6.3_toBeInstalled/libraryInstall.R
 rm $pathSharedfoldDock/R-3.6.3_toBeInstalled/*.txt
 rm $pathSharedfoldDock/R-3.6.3_toBeInstalled/*.out
-cp -r $pathSharedfoldDock/R-3.6.3_toBeInstalled/ ./$2/
+cp -r $pathSharedfoldDock/R-3.6.3_toBeInstalled ./$2/
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
 rm -r $pathSharedfoldDock
 #docker rmi -f $1

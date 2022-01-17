@@ -109,5 +109,5 @@ rm $pathSharedfoldDock/$1_jupyter_lab/RtoBeInstalled/dockerFileGenerator.R
 rm -r $pathSharedfoldDock/$1_jupyter_lab/RtoBeInstalled/packages
 rm $pathSharedfoldDock/$1_jupyter_lab/RtoBeInstalled/libraryInstall.R
 
-cp -r $pathSharedfoldDock/$1_jupyter_lab/ .
+cp -r $pathSharedfoldDock/$1_jupyter_lab .
 rm -r $pathSharedfoldDock/$1_jupyter_lab/

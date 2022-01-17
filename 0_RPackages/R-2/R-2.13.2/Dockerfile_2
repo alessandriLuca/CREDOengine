@@ -17,7 +17,6 @@ RUN apt-get -y install build-essential
 RUN apt-get -y install fort77
 RUN apt-get -y install xorg-dev
 RUN apt-get -y install liblzma-dev  libblas-dev gfortran
-RUN apt-get -y install gcc-multilib
 RUN apt-get -y install gobjc++
 RUN apt-get -y install aptitude
 RUN apt-get -y install libbz2-dev
@@ -31,7 +30,7 @@ RUN /pcre2-10.37/configure
 RUN make -j 24
 RUN make install
 RUN chmod +x /tmp/configure
-RUN /tmp/configure
+RUN /tmp/configure --with-x=yes --enable-R-shlib
 RUN make
 RUN make install
 COPY p7zip_16.02 /tmp/

@@ -43,7 +43,7 @@ fi
 #docker rmi -f $1
 mv Dockerfile_1 Dockerfile
 docker build . -t $1
-cp -R ./R-4.1.1_toBeInstalled $pathSharedfoldDock
+cp -r ./R-4.1.1_toBeInstalled $pathSharedfoldDock
 cp configurationFile.R $pathSharedfoldDock/R-4.1.1_toBeInstalled/libraryInstall.R
 docker run -tv $pathSharedfoldHost/R-4.1.1_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
@@ -60,9 +60,9 @@ rm -r $pathSharedfoldDock/R-4.1.1_toBeInstalled/packages
 rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/1_libraryInstall.sh
 rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/dockerFileGenerator.R
 rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/libraryInstall.R
-rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.txt
+#rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.txt
 rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.out
-cp -r $pathSharedfoldDock/R-4.1.1_toBeInstalled/ ./$2/
+cp -r $pathSharedfoldDock/R-4.1.1_toBeInstalled ./$2/
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
 rm -r $pathSharedfoldDock
 #docker rmi -f $1
