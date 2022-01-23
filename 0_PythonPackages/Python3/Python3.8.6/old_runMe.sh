@@ -20,20 +20,20 @@ fi
 if [ $# -eq 3 ]
 then
 echo "hope you are on IOS or Linux"
-pathSharedfoldDock=$3/$2
-pathSharedfoldHost=$3/$2
-mkdir -p $pathSharedfoldDock
+pathSharedfoldDock=$3
+pathSharedfoldHost=$3
+mkdir $pathSharedfoldDock
 echo "hey"
 fi
 
 if [ $# -eq 4 ]
 then
 echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
-pathSharedfoldDock=$3/$2
+pathSharedfoldDock=$3
 somedirpath=$(cat $4)
 pathSharedfoldHost="$somedirpath"/"$( basename "$pathSharedfoldDock" )"
 echo $pathSharedfoldHost
-mkdir -p $pathSharedfoldDock
+mkdir $pathSharedfoldDock
 
 fi
 
@@ -43,29 +43,25 @@ fi
 #docker rmi -f $1
 mv Dockerfile_1 Dockerfile
 docker build . -t $1
-#cp -r ./R-4.1.1_toBeInstalled $pathSharedfoldDock
-#cp configurationFile.R $pathSharedfoldDock/R-4.1.1_toBeInstalled/libraryInstall.R
-cp -r . $pathSharedfoldDock
-rm $pathSharedfoldDock/Dockerfile*
-cp configurationFile.R $pathSharedfoldDock/R-4.1.1_toBeInstalled/libraryInstall.R
-docker run -tv $pathSharedfoldHost/R-4.1.1_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
+cp -R ./Python3.8.6_toBeInstalled $pathSharedfoldDock
+cp configurationFile.sh $pathSharedfoldDock/Python3.8.6_toBeInstalled/configurationFile.sh
+docker run -tv $pathSharedfoldHost/Python3.8.6_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
 mv Dockerfile Dockerfile_2
-#mkdir $2
-cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
-#cp -r ./R-4.1.1 ./$2/
-#mkdir ./$2/R-4.1.1_toBeInstalled
-#cp $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.7z* ./$2/R-4.1.1_toBeInstalled/
-#cp ./pcre2-10.37.tar.gz ./$2/pcre2-10.37.tar.gz
-#cp -r ./p7zip_16.02 ./$2/
-#rm -r $pathSharedfoldDock/R-4.1.1_toBeInstalled/packages
-#rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/1_libraryInstall.sh
-#rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/dockerFileGenerator.R
-#rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/libraryInstall.R
-#rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.txt
-#rm $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.out
-#cp -r $pathSharedfoldDock/R-4.1.1_toBeInstalled ./$2/
+mkdir $2
+cp Dockerfile_2 ./$2/Dockerfile
+cp Python-3.8.6.tgz ./$2/
+mkdir ./$2/Python3.8.6_toBeInstalled
+cp $pathSharedfoldDock/Python3.8.6_toBeInstalled/*.7z* ./$2/Python3.8.6_toBeInstalled/
+cp ./pipdeptree-2.1.0-py3-none-any.whl ./$2/
+cp -r ./p7zip_16.02 ./$2/
+rm -r $pathSharedfoldDock/Python3.8.6_toBeInstalled/packages
+rm $pathSharedfoldDock/Python3.8.6_toBeInstalled/1_libraryInstall.sh
+rm $pathSharedfoldDock/Python3.8.6_toBeInstalled/configurationFile.sh
+rm $pathSharedfoldDock/Python3.8.6_toBeInstalled/*.txt
+rm $pathSharedfoldDock/Python3.8.6_toBeInstalled/*.log
+cp -r $pathSharedfoldDock/Python3.8.6_toBeInstalled/ ./$2/
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
-#rm -r $pathSharedfoldDock
+rm -r $pathSharedfoldDock
 #docker rmi -f $1

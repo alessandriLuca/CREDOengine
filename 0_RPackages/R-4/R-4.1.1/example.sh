@@ -1,3 +1,2 @@
-#./runMe.sh temp temp /home/lucastormreig/dockerfileGeneratorV4/dockerFileGenerator/0_PythonPackages/Python2.7.18/yeah/ /home/lucastormreig/different/sharedFolderPath.txt  #FOR WINDOWS
-./runMe.sh temps2 temps2 /home/lucastormreig/dockerfileGeneratorV6/dockerFileGenerator/0_RPackages/R-4/R-4.1.1/temp #FOR LINUX OR OSX
-
+#./runMe.sh temps2 R /home/lucastormreig/dockerRes #FOR LINUX OR OSX
+./runMe.sh temps2 R2 /home/lucastormreig/dockerRes /home/lucastormreig/configurationFile.txt

@@ -4,19 +4,16 @@ if [ $# -eq 0 ]
     echo "You need to provide a name for the merged Docker"
     exit
 fi
-VARIABLE=$(ls -d */)
-mkdir ./$1
+mkdir -p $4/$1
 
-for V in $VARIABLE
-do
-cp -r ./$V/* ./$1
-done
+
+cp -r $2/* $4/$1
+cp -r $3/* $4/$1
 
 echo "FROM library/ubuntu:20.04 as UBUNTU_BASE
 MAINTAINER alessandri.luca1991@gmail.com
-ARG DEBIAN_FRONTEND=noninteractive" > ./$1/Dockerfile
-for V in $VARIABLE
-do
-tail -n +4 ./$V/Dockerfile >> ./$1/Dockerfile
-done
+ARG DEBIAN_FRONTEND=noninteractive" > $4/$1/Dockerfile
+
+tail -n +4 $2/Dockerfile >> $4/$1/Dockerfile
+tail -n +4 $3/Dockerfile >> $4/$1/Dockerfile
 
