@@ -17,5 +17,5 @@ a=$(grep $(awk -v c=$VARIABLE 'NR==c { print $VARIABLE }' /scratch/out.txt | sed
 if [[ -n "$a" ]] ; then echo 'pip3 install --no-dependencies /tmp/packages/'$a >> scratch/listForDockerfile.sh ; fi
 done
 chmod 777 /scratch/listForDockerfile.sh
-7za -v25165824 a /scratch/install_files.7z /scratch/packages
+7za -v25165824 ao /scratch/install_files.7z /scratch/packages
 chmod -R 777 /scratch/
