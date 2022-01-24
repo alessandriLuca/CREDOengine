@@ -1,2 +1,2 @@
-./runMe.sh merge tempdocker repbioinfo/visualstudio1 /home/lucastormreig/dockerfileGeneratorV6/dockerFileGenerator/2_GUI/visualStudio/visualstudio_3.4.1/temp
-
+#./runMe.sh /home/lucastormreig/dockerRes/merged/ tempdockername juplab /home/lucastormreig/dockerRes/
+./runMe.sh /home/lucastormreig/dockerRes/merged/ tempdockername rstudio /home/lucastormreig/dockerRes/ /home/lucastormreig/configurationFile.txt

@@ -1,0 +1,16 @@
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libseccomp-dev \
+    pkg-config \
+    squashfs-tools \
+    cryptsetup
+COPY go /tmp/go
+RUN cd /tmp/go && 7za -y x "*.7z*"
+RUN mv /tmp/go/go /usr/local
+ENV GOROOT=/usr/local/go
+ENV GOPATH=$HOME/Projects/Proj1
+ENV PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+RUN git clone https://github.com/sylabs/singularity/
+RUN cd /singularity && ./mconfig && \
+    make -C ./builddir && \
+    make -C ./builddir install
