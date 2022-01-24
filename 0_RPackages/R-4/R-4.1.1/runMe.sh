@@ -42,18 +42,26 @@ fi
 
 #docker rmi -f $1
 mv Dockerfile_1 Dockerfile
+sync
 docker build . -t $1
 #cp -r ./R-4.1.1_toBeInstalled $pathSharedfoldDock
 #cp configurationFile.R $pathSharedfoldDock/R-4.1.1_toBeInstalled/libraryInstall.R
 cp -r . $pathSharedfoldDock
+sync
 rm $pathSharedfoldDock/Dockerfile*
+sync
 cp configurationFile.R $pathSharedfoldDock/R-4.1.1_toBeInstalled/libraryInstall.R
+sync
 docker run -tv $pathSharedfoldHost/R-4.1.1_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
+sync
 mv Dockerfile_2 Dockerfile
+sync
 mv Dockerfile Dockerfile_2
 #mkdir $2
+sync
 cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
+sync
 #cp -r ./R-4.1.1 ./$2/
 #mkdir ./$2/R-4.1.1_toBeInstalled
 #cp $pathSharedfoldDock/R-4.1.1_toBeInstalled/*.7z* ./$2/R-4.1.1_toBeInstalled/

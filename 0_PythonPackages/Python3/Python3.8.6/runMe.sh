@@ -42,17 +42,21 @@ fi
 
 #docker rmi -f $1
 mv Dockerfile_1 Dockerfile
+sync
 docker build . -t $1
 #cp -R ./Python3.8.6_toBeInstalled $pathSharedfoldDock
 cp -r . $pathSharedfoldDock
+sync
 rm $pathSharedfoldDock/Dockerfile*
 cp configurationFile.sh $pathSharedfoldDock/Python3.8.6_toBeInstalled/configurationFile.sh
+sync
 docker run -tv $pathSharedfoldHost/Python3.8.6_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
 mv Dockerfile Dockerfile_2
 
 cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
+sync
 #cp Python-3.8.6.tgz ./$pathSharedfoldDock/
 #mkdir ./$2/Python3.8.6_toBeInstalled
 #cp $pathSharedfoldDock/Python3.8.6_toBeInstalled/*.7z* ./$2/Python3.8.6_toBeInstalled/
