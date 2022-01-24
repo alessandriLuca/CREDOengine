@@ -1,18 +1,17 @@
 #!/bin/bash 
-if [ $# -ne 1 ]
+if [ $# -ne 2 ]
   then
     echo "You need to provide :"
         echo " The folderName of the mergedDockers  "
-    echo " Folder name, for the new docker  "
-    echo " DockerName to build the new docker container "
+                echo " The result Folder"
     exit
 fi
-mkdir ./$1_wDocker
+j="$( basename "$1" )"
+
+mkdir $2/${j}_wDocker
 
 
-cp -r ./$1/* ./$1_wDocker
-
-
-cp ./$1/Dockerfile ./$1_wDocker/Dockerfile
-cat ./tail >> ./$1_wDocker/Dockerfile
+cp -r $1/* $2/${j}_wDocker
+sync
+cat ./tail >> $2/${j}_wDocker/Dockerfile
 
