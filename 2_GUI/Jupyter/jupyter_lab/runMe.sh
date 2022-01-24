@@ -45,11 +45,13 @@ mkdir -p $pathSharedfoldDock/${j}_jupyter_lab
 
 
 cp -r $1/* $pathSharedfoldDock/${j}_jupyter_lab
-
+sync
 
 cp -r ./RtoBeInstalled $pathSharedfoldDock/${j}_jupyter_lab/
+sync
 docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2
 cp -r ./PtoBeInstalled $pathSharedfoldDock/${j}_jupyter_lab/
+sync
 docker run -tv $pathSharedfoldHost/${j}_jupyter_lab/PtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 
 echo 'COPY PtoBeInstalled/install_filesP* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
@@ -67,6 +69,7 @@ echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/${j}_jupyter_lab/D
 
 docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2
 cp ./Rprofile $pathSharedfoldDock/${j}_jupyter_lab/
+sync
 echo 'IRkernel::installspec()' >> $pathSharedfoldDock/${j}_jupyter_lab/rscript.R
 echo 'COPY rscript.R /home/' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'RUN Rscript /home/rscript.R' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
@@ -75,8 +78,9 @@ echo 'ENV SHELL=/bin/bash'  >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 cat ./tail >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 
 cp ./configurationFile.txt $pathSharedfoldDock/${j}_jupyter_lab/
+sync
 cp ./run.exe $pathSharedfoldDock/${j}_jupyter_lab/
-
+sync
 
 echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_jupyter_lab/script.sh
 echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
