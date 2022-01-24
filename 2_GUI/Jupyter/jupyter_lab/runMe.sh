@@ -28,8 +28,6 @@ if [ $# -eq 5 ]
 then
 echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
 pathSharedfoldDock=$4
-#somedirpath=$(cat $5)
-#pathSharedfoldHost="$somedirpath"/"$( basename "$pathSharedfoldDock" )"
 pathSharedfoldHost=$(cat $5)
 echo $pathSharedfoldHost
 mkdir $pathSharedfoldDock
@@ -38,7 +36,6 @@ fi
 
 
 
-#folderName,dockerName,finalDockerName,temporaryFolderPath,hostPath
 j="$( basename "$1" )"
 echo ${j}
 mkdir -p $pathSharedfoldDock/${j}_jupyter_lab
@@ -60,8 +57,6 @@ echo 'COPY PtoBeInstalled/listForDockerfileP.sh /tmp/ ' >> $pathSharedfoldDock/$
 echo 'RUN /tmp/listForDockerfileP.sh ' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2
 docker run -tv $pathSharedfoldHost/${j}_jupyter_lab/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
-#cp $(pwd)/$1_jupyter_lab/RtoBeInstalled/install_filesR* $(pwd)/$1_jupyter_lab/
-#cp $(pwd)/$1_jupyter_lab/RtoBeInstalled/listForDockerfileR.sh $(pwd)/$1_jupyter_lab/
 echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile

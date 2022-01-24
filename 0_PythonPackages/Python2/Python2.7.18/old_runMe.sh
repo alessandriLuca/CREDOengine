@@ -20,41 +20,47 @@ fi
 if [ $# -eq 3 ]
 then
 echo "hope you are on IOS or Linux"
-pathSharedfoldDock=$3/$2
-pathSharedfoldHost=$3/$2
-mkdir -p $pathSharedfoldDock
+pathSharedfoldDock=$3
+pathSharedfoldHost=$3
+mkdir $pathSharedfoldDock
 echo "hey"
 fi
 
 if [ $# -eq 4 ]
 then
 echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
-pathSharedfoldDock=$3/$2
+pathSharedfoldDock=$3
 somedirpath=$(cat $4)
 pathSharedfoldHost="$somedirpath"/"$( basename "$pathSharedfoldDock" )"
 echo $pathSharedfoldHost
-mkdir -p $pathSharedfoldDock
+mkdir $pathSharedfoldDock
 
 fi
 
+
+#temp finalName tempFolder-> /sharedFolder pathToTempFolderOnHost-> Leggi da file
+
+#docker rmi -f $1
 mv Dockerfile_1 Dockerfile
-sync
 docker build . -t $1
-
-cp -r . $pathSharedfoldDock
-sync
-rm $pathSharedfoldDock/Dockerfile*
-sync
-cp configurationFile.R $pathSharedfoldDock/R-2.13.2_toBeInstalled/libraryInstall.R
-sync
-docker run -tv $pathSharedfoldHost/R-2.13.2_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
+cp -R ./Python2.7.18_toBeInstalled $pathSharedfoldDock
+cp configurationFile.sh $pathSharedfoldDock/Python2.7.18_toBeInstalled/configurationFile.sh
+docker run -tv $pathSharedfoldHost/Python2.7.18_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
-sync
 mv Dockerfile_2 Dockerfile
-sync
 mv Dockerfile Dockerfile_2
-sync
-cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
-sync
+mkdir $2
+cp Dockerfile_2 ./$2/Dockerfile
+cp Python-2.7.18.tgz ./$2/
+mkdir ./$2/Python2.7.18_toBeInstalled
+cp $pathSharedfoldDock/Python2.7.18_toBeInstalled/*.7z* ./$2/Python2.7.18_toBeInstalled/
+cp ./pipdeptree-2.1.0-py2-none-any.whl ./$2/
+cp -r ./p7zip_16.02 ./$2/
+rm $pathSharedfoldDock/Python2.7.18_toBeInstalled/1_libraryInstall.sh
+rm $pathSharedfoldDock/Python2.7.18_toBeInstalled/configurationFile.sh
+rm $pathSharedfoldDock/Python2.7.18_toBeInstalled/*.txt
+rm $pathSharedfoldDock/Python2.7.18_toBeInstalled/*.log
+cp -r $pathSharedfoldDock/Python2.7.18_toBeInstalled/ ./$2/
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
-
+rm -r $pathSharedfoldDock
+#docker rmi -f $1

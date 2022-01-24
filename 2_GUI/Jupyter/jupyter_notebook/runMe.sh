@@ -1,8 +1,13 @@
 #!/bin/bash 
+#1)merged File path
+#2) docker temp
+#3) Final Docker name
+#4) Final path
+#5) path to hostPath txt file.
 if [ $# -ne 4 ] &&  [ $# -ne 5 ]
   then
     echo "You need to provide :"
-        echo " The folderName of the mergedDockers  "
+        echo " The absolute path to the mergedDockers  "
     echo " a temporary docker name  "
     echo " DockerName to build the new docker container "
         echo " A temporary folder path "
@@ -23,8 +28,7 @@ if [ $# -eq 5 ]
 then
 echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
 pathSharedfoldDock=$4
-somedirpath=$(cat $5)
-pathSharedfoldHost="$somedirpath"/"$( basename "$pathSharedfoldDock" )"
+pathSharedfoldHost=$(cat $5)
 echo $pathSharedfoldHost
 mkdir $pathSharedfoldDock
 
@@ -32,82 +36,62 @@ fi
 
 
 
-#folderName,dockerName,finalDockerName,temporaryFolderPath,hostPath
-
-mkdir $pathSharedfoldDock/$1_jupyter_notebook
-
-
-cp -r ./$1/* $pathSharedfoldDock/$1_jupyter_notebook
+j="$( basename "$1" )"
+echo ${j}
+mkdir -p $pathSharedfoldDock/${j}_jupyter_notebook
 
 
-cp -r RtoBeInstalled $pathSharedfoldDock/$1_jupyter_notebook/
-docker build $pathSharedfoldDock/$1_jupyter_notebook -t $2
-cp -r ./PtoBeInstalled $pathSharedfoldDock/$1_jupyter_notebook/
-docker run -tv $pathSharedfoldHost/$1_jupyter_notebook/PtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
-#cp $(pwd)/$1_jupyter_notebook/PtoBeInstalled/install_filesP* $(pwd)/$1_jupyter_notebook/   #NOOOOOOOOOOO
-#cp $(pwd)/$1_jupyter_notebook/PtoBeInstalled/listForDockerfileP.sh $(pwd)/$1_jupyter_notebook/    # NOOOOOOOOOOOOO
-echo 'COPY PtoBeInstalled/install_filesP* /tmp/' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'RUN cd /tmp/ && 7za -y x "install_filesP.7z*"' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'COPY PtoBeInstalled/listForDockerfileP.sh /tmp/ ' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'RUN /tmp/listForDockerfileP.sh ' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-docker build $pathSharedfoldDock/$1_jupyter_notebook -t $2
-docker run -tv $pathSharedfoldHost/$1_jupyter_notebook/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
-#cp $(pwd)/$1_jupyter_notebook/RtoBeInstalled/install_filesR* $(pwd)/$1_jupyter_notebook/
-#cp $(pwd)/$1_jupyter_notebook/RtoBeInstalled/listForDockerfileR.sh $(pwd)/$1_jupyter_notebook/
-echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
+cp -r $1/* $pathSharedfoldDock/${j}_jupyter_notebook
+sync
 
-docker build $pathSharedfoldDock/$1_jupyter_notebook -t $2
-cp ./Rprofile $pathSharedfoldDock/$1_jupyter_notebook/
+cp -r ./RtoBeInstalled $pathSharedfoldDock/${j}_jupyter_notebook/
+sync
+docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2
+cp -r ./PtoBeInstalled $pathSharedfoldDock/${j}_jupyter_notebook/
+sync
+docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/PtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 
-echo 'IRkernel::installspec()' >> $pathSharedfoldDock/$1_jupyter_notebook/rscript.R
-echo 'COPY rscript.R /home/' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'RUN Rscript /home/rscript.R' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'COPY Rprofile /root/.Rprofile' >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-echo 'ENV SHELL=/bin/bash'  >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
-cat ./tail >> $pathSharedfoldDock/$1_jupyter_notebook/Dockerfile
+echo 'COPY PtoBeInstalled/install_filesP* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'RUN cd /tmp/ && 7za -y x "install_filesP.7z*"' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'COPY PtoBeInstalled/listForDockerfileP.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'RUN /tmp/listForDockerfileP.sh ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2
+docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
+echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 
-cp ./configurationFile.txt $pathSharedfoldDock/$1_jupyter_notebook/
-cp ./run.exe $pathSharedfoldDock/$1_jupyter_notebook/
+docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2
+cp ./Rprofile $pathSharedfoldDock/${j}_jupyter_notebook/
+sync
+echo 'IRkernel::installspec()' >> $pathSharedfoldDock/${j}_jupyter_notebook/rscript.R
+echo 'COPY rscript.R /home/' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'RUN Rscript /home/rscript.R' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'COPY Rprofile /root/.Rprofile' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+echo 'ENV SHELL=/bin/bash'  >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
+cat ./tail >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 
+cp ./configurationFile.txt $pathSharedfoldDock/${j}_jupyter_notebook/
+sync
+cp ./run.exe $pathSharedfoldDock/${j}_jupyter_notebook/
+sync
 
-echo "docker build . -t " $3  > $pathSharedfoldDock/$1_jupyter_notebook/script.sh
-echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/$1_jupyter_notebook/script.sh
-echo "mkdir \$tt" >> $pathSharedfoldDock/$1_jupyter_notebook/script.sh
-echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/$1_jupyter_notebook/script.sh
-echo "rm \$tt\id.txt" >> $pathSharedfoldDock/$1_jupyter_notebook/script.sh
-echo "docker run -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt\id.txt --privileged=true -p  8888:8888 "$3  >> $pathSharedfoldDock/$1_jupyter_notebook/script.sh
-chmod +x $pathSharedfoldDock/$1_jupyter_notebook/script.sh
-
-
-
-
-
-echo "docker build . -t " $3  > $pathSharedfoldDock/$1_jupyter_notebook/script.cmd
-echo "set /p Build=<configurationFile.txt" >> $pathSharedfoldDock/$1_jupyter_notebook/script.cmd
-echo "mkdir %Build%"  >> $pathSharedfoldDock/$1_jupyter_notebook/script.cmd
-echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/$1_jupyter_notebook/script.cmd
-echo "del %Build%\id.txt"  >> $pathSharedfoldDock/$1_jupyter_notebook/script.cmd
-echo "docker run -itv %Build%:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt  -p  8888:8888 "$3  >> $pathSharedfoldDock/$1_jupyter_notebook/script.cmd
+echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
+echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
+echo "mkdir \$tt" >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
+echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
+echo "rm \$tt\id.txt" >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
+echo "docker run -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt\id.txt --privileged=true -p  8888:8888 "$3  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
+chmod +x $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
 
 
 
 
 
-rm $pathSharedfoldDock/$1_jupyter_notebook/PtoBeInstalled/*.txt
-rm -r  $pathSharedfoldDock/$1_jupyter_notebook/PtoBeInstalled/packages
-rm $pathSharedfoldDock/$1_jupyter_notebook/PtoBeInstalled/*.log
-rm $pathSharedfoldDock/$1_jupyter_notebook/PtoBeInstalled/1_libraryInstall.sh
-rm $pathSharedfoldDock/$1_jupyter_notebook/PtoBeInstalled/configurationFile.sh
-
-rm $pathSharedfoldDock/$1_jupyter_notebook/RtoBeInstalled/*.txt
-rm $pathSharedfoldDock/$1_jupyter_notebook/RtoBeInstalled/*.out
-rm $pathSharedfoldDock/$1_jupyter_notebook/RtoBeInstalled/1_libraryInstall.sh
-rm $pathSharedfoldDock/$1_jupyter_notebook/RtoBeInstalled/dockerFileGenerator.R
-rm -r $pathSharedfoldDock/$1_jupyter_notebook/RtoBeInstalled/packages
-rm $pathSharedfoldDock/$1_jupyter_notebook/RtoBeInstalled/libraryInstall.R
-
-cp -r $pathSharedfoldDock/$1_jupyter_notebook .
-rm -r $pathSharedfoldDock/$1_jupyter_notebook/
+echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
+echo "set /p Build=<configurationFile.txt" >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
+echo "mkdir %Build%"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
+echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
+echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
+echo "docker run -itv %Build%:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt  -p  8888:8888 "$3  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
