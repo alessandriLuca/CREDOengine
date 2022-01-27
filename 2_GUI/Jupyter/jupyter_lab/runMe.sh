@@ -4,6 +4,12 @@
 #3) Final Docker name
 #4) Final path
 #5) path to hostPath txt file.
+retry() {
+    until "$@"
+    do
+            echo "Attempt failed! Trying again"
+    done
+}
 if [ $# -ne 4 ] &&  [ $# -ne 5 ]
   then
     echo "You need to provide :"
@@ -41,13 +47,13 @@ echo ${j}
 mkdir -p $pathSharedfoldDock/${j}_jupyter_lab
 
 
-cp -r $1/* $pathSharedfoldDock/${j}_jupyter_lab
+retry cp -r $1/* $pathSharedfoldDock/${j}_jupyter_lab
 sync
 
-cp -r ./RtoBeInstalled $pathSharedfoldDock/${j}_jupyter_lab/
+retry cp -r ./RtoBeInstalled $pathSharedfoldDock/${j}_jupyter_lab/
 sync
 docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2
-cp -r ./PtoBeInstalled $pathSharedfoldDock/${j}_jupyter_lab/
+retry cp -r ./PtoBeInstalled $pathSharedfoldDock/${j}_jupyter_lab/
 sync
 docker run -tv $pathSharedfoldHost/${j}_jupyter_lab/PtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 
@@ -63,7 +69,7 @@ echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/$
 echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 
 docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2
-cp ./Rprofile $pathSharedfoldDock/${j}_jupyter_lab/
+retry cp ./Rprofile $pathSharedfoldDock/${j}_jupyter_lab/
 sync
 echo 'IRkernel::installspec()' >> $pathSharedfoldDock/${j}_jupyter_lab/rscript.R
 echo 'COPY rscript.R /home/' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
@@ -72,9 +78,9 @@ echo 'COPY Rprofile /root/.Rprofile' >> $pathSharedfoldDock/${j}_jupyter_lab/Doc
 echo 'ENV SHELL=/bin/bash'  >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 cat ./tail >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 
-cp ./configurationFile.txt $pathSharedfoldDock/${j}_jupyter_lab/
+retry cp ./configurationFile.txt $pathSharedfoldDock/${j}_jupyter_lab/
 sync
-cp ./run.exe $pathSharedfoldDock/${j}_jupyter_lab/
+retry cp ./run.exe $pathSharedfoldDock/${j}_jupyter_lab/
 sync
 
 echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_jupyter_lab/script.sh

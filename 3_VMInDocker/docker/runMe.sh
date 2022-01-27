@@ -1,4 +1,10 @@
 #!/bin/bash 
+retry() {
+    until "$@"
+    do
+            echo "Attempt failed! Trying again"
+    done
+}
 if [ $# -ne 2 ]
   then
     echo "You need to provide :"
@@ -11,7 +17,7 @@ j="$( basename "$1" )"
 mkdir $2/${j}_wDocker
 
 
-cp -r $1/* $2/${j}_wDocker
+retry cp -r $1/* $2/${j}_wDocker
 sync
 cat ./tail >> $2/${j}_wDocker/Dockerfile
 
