@@ -1,4 +1,10 @@
 #!/bin/bash
+retry() {
+    until "$@"
+    do
+            echo "Attempt failed! Trying again"
+    done
+}
 #1)merged File path
 #2) docker temp
 #3) Final Docker name
@@ -34,9 +40,9 @@ fi
 j="$( basename "$1" )"
 echo ${j}
 mkdir -p $pathSharedfoldDock/${j}_visualStudio
-cp -r $1/* $pathSharedfoldDock/${j}_visualStudio
+retry cp -r $1/* $pathSharedfoldDock/${j}_visualStudio
 sync
-cp -r ./* $pathSharedfoldDock/${j}_visualStudio
+retry cp -r ./* $pathSharedfoldDock/${j}_visualStudio
 sync
 cat ./tail >> $pathSharedfoldDock/${j}_visualStudio/Dockerfile
 echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_visualStudio/script.sh

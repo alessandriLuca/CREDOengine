@@ -4,6 +4,12 @@
 #3) Final Docker name
 #4) Final path
 #5) path to hostPath txt file.
+retry() {
+    until "$@"
+    do
+            echo "Attempt failed! Trying again"
+    done
+}
 if [ $# -ne 4 ] &&  [ $# -ne 5 ]
   then
     echo "You need to provide :"
@@ -35,9 +41,9 @@ fi
 j="$( basename "$1" )"
 echo ${j}
 mkdir -p $pathSharedfoldDock/${j}_rstudio
-cp -r $1/* $pathSharedfoldDock/${j}_rstudio
+retry cp -r $1/* $pathSharedfoldDock/${j}_rstudio
 sync
-cp -r ./* $pathSharedfoldDock/${j}_rstudio
+retry cp -r ./* $pathSharedfoldDock/${j}_rstudio
 sync
 cat ./tail >> $pathSharedfoldDock/${j}_rstudio/Dockerfile
 echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_rstudio/script.sh

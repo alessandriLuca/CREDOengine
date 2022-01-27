@@ -1,4 +1,10 @@
 #!/bin/bash
+retry() {
+    until "$@"
+    do
+            echo "Attempt failed! Trying again"
+    done
+}
 if [ $# -eq 0 ]
   then
     echo "You need to provide a docker temporary tag a final name and a temporary folder path. For windows add also the host path to a file containing the sharedFolder path. for example ./buildMe.sh dockertest resultDockerfile /home/user/temporaryFolder"
@@ -41,11 +47,11 @@ mv Dockerfile_1 Dockerfile
 sync
 docker build . -t $1
 
-cp -r . $pathSharedfoldDock
+retry cp -r . $pathSharedfoldDock
 sync
 rm $pathSharedfoldDock/Dockerfile*
 sync
-cp configurationFile.R $pathSharedfoldDock/R-3.4.4_toBeInstalled/libraryInstall.R
+retry cp configurationFile.R $pathSharedfoldDock/R-3.4.4_toBeInstalled/libraryInstall.R
 sync
 docker run -tv $pathSharedfoldHost/R-3.4.4_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
 mv Dockerfile Dockerfile_1
@@ -54,7 +60,7 @@ mv Dockerfile_2 Dockerfile
 sync
 mv Dockerfile Dockerfile_2
 sync
-cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
+retry cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
 sync
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
 
