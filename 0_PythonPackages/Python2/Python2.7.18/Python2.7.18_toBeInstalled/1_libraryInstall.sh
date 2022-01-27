@@ -19,8 +19,8 @@ done
 chmod 777 /scratch/listForDockerfile.sh
 7za -v25165824 a /scratch/install_files.7z /scratch/packages
 chmod -R 777 /scratch/
-rm -r packages
-rm pip.log
-rm out.txt
-rm counts.txt
+rm -r /scratch/packages
+rm /scratch/pip.log
+rm /scratch/out.txt
+rm /scratch/counts.txt
 chmod -R 777 /scratch/

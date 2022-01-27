@@ -18,4 +18,8 @@ if [[ -n "$a" ]] ; then echo 'pip3 install --no-dependencies /tmp/packages/'$a >
 done
 chmod 777 /scratch/listForDockerfile.sh
 7za -v25165824 a /scratch/install_files.7z /scratch/packages
+rm -r /scratch/packages
+rm /scratch/pip.log
+rm /scratch/out.txt
+rm /scratch/counts.txt
 chmod -R 777 /scratch/
