@@ -1,4 +1,4 @@
-# dockerFileGeneratorv2
+# dockerFileGenerator
 
 In order to generate the dockerfile for a specific version of R/python and with specific libraries the instruction are pretty easy, just follow the steps : 
 1) Choose R or python folder 
