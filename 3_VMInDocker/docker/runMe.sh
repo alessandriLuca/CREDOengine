@@ -14,6 +14,14 @@ if [ $# -ne 2 ]
 fi
 j="$( basename "$1" )"
 
+pathSharedfoldDocks=$2/${j}_wDocker
+if [ -d "$pathSharedfoldDocks" ]; then
+    echo "Error: ${pathSharedfoldDocks} already exists. Use another name or delete the folder!!!!"
+  exit 1
+else
+  echo "Installing files in ${pathSharedfoldDocks}..."
+
+fi
 mkdir $2/${j}_wDocker
 
 

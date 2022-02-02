@@ -10,6 +10,14 @@ if [ $# -eq 0 ]
     echo "You need to provide a name for the merged Docker"
     exit
 fi
+pathSharedfoldDock=$4/$1
+if [ -d "$pathSharedfoldDock" ]; then
+    echo "Error: ${pathSharedfoldDock} already exists. Use another name or delete the folder!!!!"
+  exit 1
+else
+  echo "Installing files in ${pathSharedfoldDock}..."
+
+fi
 mkdir -p $4/$1
 
 

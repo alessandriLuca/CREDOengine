@@ -42,21 +42,29 @@ echo $pathSharedfoldHost
 mkdir -p $pathSharedfoldDock
 
 fi
+if [ -d "$pathSharedfoldDock" ]; then
+    echo "Error: ${pathSharedfoldDock} already exists. Use another name or delete the folder!!!!"
+  exit 1
+else
+  echo "Installing files in ${pathSharedfoldDock}..."
+
+fi
 mv Dockerfile_1 Dockerfile
 sync
-docker build . -t $1
+dockerTempName=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+docker build . -t $dockerTempName
 retry cp -r . $pathSharedfoldDock
 sync
 rm $pathSharedfoldDock/Dockerfile*
 retry cp configurationFile.sh $pathSharedfoldDock/Python3.8.6_toBeInstalled/configurationFile.sh
 sync
 echo "Step : python library install. This might take some time."
-docker run -tv $pathSharedfoldHost/Python3.8.6_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
+docker run -tv $pathSharedfoldHost/Python3.8.6_toBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
 mv Dockerfile Dockerfile_2
 
 retry cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
 sync
-echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$1
+echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$dockerTempName
 

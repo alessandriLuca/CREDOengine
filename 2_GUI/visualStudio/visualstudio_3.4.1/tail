@@ -1,6 +1,8 @@
 COPY visualStudio /visualStudio
 RUN cd /visualStudio/ && 7za -y x "*.7z*"
 RUN dpkg -i /visualStudio/visualStudio/*.deb
-COPY config.yaml ~/.config/code-server/config.yaml
-EXPOSE 8080
+COPY disgrace.sh /disgrace.sh
+RUN /disgrace.sh
+COPY config.yaml /root/.config/code-server/config.yaml
+EXPOSE 8888
 CMD ["code-server","--auth","none"]
