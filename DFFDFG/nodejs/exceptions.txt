@@ -1,2 +1,0 @@
-Python2.7.18=classicMerge$singularity#
-R-2.12.2=r_studio
