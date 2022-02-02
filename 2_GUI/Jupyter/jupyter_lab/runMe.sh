@@ -52,23 +52,25 @@ sync
 
 retry cp -r ./RtoBeInstalled $pathSharedfoldDock/${j}_jupyter_lab/
 sync
-docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2
+docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2 >> $pathSharedfoldDock/${j}_jupyter_lab/log.txt
 retry cp -r ./PtoBeInstalled $pathSharedfoldDock/${j}_jupyter_lab/
 sync
+echo "Step library Install. Might take some time. ">> $pathSharedfoldDock/${j}_jupyter_lab/log.txt
 docker run -tv $pathSharedfoldHost/${j}_jupyter_lab/PtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 
 echo 'COPY PtoBeInstalled/install_filesP* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'RUN cd /tmp/ && 7za -y x "install_filesP.7z*"' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'COPY PtoBeInstalled/listForDockerfileP.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'RUN /tmp/listForDockerfileP.sh ' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
-docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2
+docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2  >> $pathSharedfoldDock/${j}_jupyter_lab/log.txt
+echo "Step library Install. Might take some time. ">> $pathSharedfoldDock/${j}_jupyter_lab/log.txt
 docker run -tv $pathSharedfoldHost/${j}_jupyter_lab/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 
-docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2
+docker build $pathSharedfoldDock/${j}_jupyter_lab -t $2  >> $pathSharedfoldDock/${j}_jupyter_lab/log.txt
 retry cp ./Rprofile $pathSharedfoldDock/${j}_jupyter_lab/
 sync
 echo 'IRkernel::installspec()' >> $pathSharedfoldDock/${j}_jupyter_lab/rscript.R

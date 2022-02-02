@@ -52,23 +52,25 @@ sync
 
 retry cp -r ./RtoBeInstalled $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
-docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2
+docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2 >> $pathSharedfoldDock/${j}_jupyter_notebook/log.txt
 retry cp -r ./PtoBeInstalled $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
+echo "Step library Install. Might take some time. ">> $pathSharedfoldDock/${j}_jupyter_notebook/log.txt
 docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/PtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 
 echo 'COPY PtoBeInstalled/install_filesP* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN cd /tmp/ && 7za -y x "install_filesP.7z*"' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'COPY PtoBeInstalled/listForDockerfileP.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN /tmp/listForDockerfileP.sh ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
-docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2
+docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2 >> $pathSharedfoldDock/${j}_jupyter_notebook/log.txt
+echo "Step library Install. Might take some time. ">> $pathSharedfoldDock/${j}_jupyter_notebook/log.txt
 docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/RtoBeInstalled:/scratch $2 /scratch/1_libraryInstall.sh
 echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 
-docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2
+docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $2 >> $pathSharedfoldDock/${j}_jupyter_notebook/log.txt
 retry cp ./Rprofile $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
 echo 'IRkernel::installspec()' >> $pathSharedfoldDock/${j}_jupyter_notebook/rscript.R
