@@ -77,18 +77,19 @@ echo 'RUN Rscript /home/rscript.R' >> $pathSharedfoldDock/${j}_jupyter_lab/Docke
 echo 'COPY Rprofile /root/.Rprofile' >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 echo 'ENV SHELL=/bin/bash'  >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
 cat ./tail >> $pathSharedfoldDock/${j}_jupyter_lab/Dockerfile
-
-retry cp ./configurationFile.txt $pathSharedfoldDock/${j}_jupyter_lab/
-sync
-retry cp ./run.exe $pathSharedfoldDock/${j}_jupyter_lab/
 sync
 
 echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_jupyter_lab/script.sh
+echo 'if test -f "./configurationFile.txt"; then' >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
+echo 'echo "$FILE exists."' >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
+echo 'else' >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
+echo 'pwd > configurationFile.txt' >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
+echo 'fi' >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
 echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
 echo "mkdir \$tt" >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
 echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
-echo "rm \$tt\id.txt" >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
-echo "docker run -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt\id.txt --privileged=true -p  8888:8888 "$3  >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
+echo "rm \$tt/id.txt" >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
+echo "docker run -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt/id.txt --privileged=true -p  8888:8888 "$3  >> $pathSharedfoldDock/${j}_jupyter_lab/script.sh
 chmod +x $pathSharedfoldDock/${j}_jupyter_lab/script.sh
 
 
@@ -96,7 +97,10 @@ chmod +x $pathSharedfoldDock/${j}_jupyter_lab/script.sh
 
 
 echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_jupyter_lab/script.cmd
-echo "set /p Build=<configurationFile.txt" >> $pathSharedfoldDock/${j}_jupyter_lab/script.cmd
+echo '@Set "Build=%CD%"' >> $pathSharedfoldDock/${j}_jupyter_lab/script.cmd
+echo '@Echo(%Build%' >> $pathSharedfoldDock/${j}_jupyter_lab/script.cmd
+echo '@If Not Exist "configurationFile.txt" Set /P "=%Build%" 0<NUL 1>"configurationFile.txt"' >> $pathSharedfoldDock/${j}_jupyter_lab/script.cmd
+
 echo "mkdir %Build%"  >> $pathSharedfoldDock/${j}_jupyter_lab/script.cmd
 echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_jupyter_lab/script.cmd
 echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_jupyter_lab/script.cmd

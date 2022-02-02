@@ -46,14 +46,23 @@ retry cp -r ./* $pathSharedfoldDock/${j}_visualStudio
 sync
 cat ./tail >> $pathSharedfoldDock/${j}_visualStudio/Dockerfile
 echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_visualStudio/script.sh
+echo 'if test -f "./configurationFile.txt"; then' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
+echo 'echo "$FILE exists."' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
+echo 'else' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
+echo 'pwd > configurationFile.txt' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
+echo 'fi' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
 echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
 echo "mkdir \$tt" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
 echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo "rm \$tt\id.txt" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo "docker run -itv \$tt:/home/visualStudio/ -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt\id.txt --privileged=true -p 8888:8888 --network host  -e DISABLE_AUTH=true "$3  >> $pathSharedfoldDock/${j}_visualStudio/script.sh
+echo "rm \$tt/id.txt" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
+echo "docker run -itv \$tt:/home/visualStudio/ -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt/id.txt --privileged=true -p 8888:8888 --network host  -e DISABLE_AUTH=true "$3  >> $pathSharedfoldDock/${j}_visualStudio/script.sh
 chmod +x $pathSharedfoldDock/${j}_visualStudio/script.sh
+
+
 echo "docker build . -t " $3  > $pathSharedfoldDock/${j}_visualStudio/script.cmd
-echo "set /p Build=<configurationFile.txt" >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
+echo '@Set "Build=%CD%"' >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
+echo '@Echo(%Build%' >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
+echo '@If Not Exist "configurationFile.txt" Set /P "=%Build%" 0<NUL 1>"configurationFile.txt"' >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
 echo "mkdir %Build%"  >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
 echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
 echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_visualStudio/script.cmd

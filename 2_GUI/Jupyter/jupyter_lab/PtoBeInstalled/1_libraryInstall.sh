@@ -21,4 +21,8 @@ rm /scratch/listForDockerfileP.sh
 mv /scratch/listForDockerfileP2.sh /scratch/listForDockerfileP.sh
 chmod 777 /scratch/listForDockerfileP.sh
 7za -v25165824 a /scratch/install_filesP.7z /scratch/packages
+rm -r /scratch/packages
+rm /scratch/pip.log
+rm /scratch/out.txt
+rm /scratch/counts.txt
 chmod -R 777 /scratch/
