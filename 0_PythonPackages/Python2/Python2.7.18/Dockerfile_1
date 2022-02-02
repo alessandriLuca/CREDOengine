@@ -1,7 +1,6 @@
 FROM library/ubuntu:20.04 as UBUNTU_BASE
 MAINTAINER alessandri.luca1991@gmail.com
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update
 RUN apt-get update \
     && apt-get -y install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget \
     && apt-get -y install libblas-dev liblapack-dev \

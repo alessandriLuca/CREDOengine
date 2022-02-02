@@ -44,13 +44,13 @@ mkdir -p $pathSharedfoldDock
 fi
 mv Dockerfile_1 Dockerfile
 sync
-docker build . -t $1  >> $pathSharedfoldDock/log.txt
+docker build . -t $1
 retry cp -r . $pathSharedfoldDock
 sync
 rm $pathSharedfoldDock/Dockerfile*
 retry cp configurationFile.sh $pathSharedfoldDock/Python2.7.18_toBeInstalled/configurationFile.sh
 sync
-echo "Step : python library install. This might take some time." >> $pathSharedfoldDock/log.txt
+echo "Step : python library install. This might take some time."
 docker run -tv $pathSharedfoldHost/Python2.7.18_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile

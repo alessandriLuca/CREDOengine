@@ -45,7 +45,7 @@ fi
 
 mv Dockerfile_1 Dockerfile
 sync
-docker build . -t $1 >> $pathSharedfoldDock/log.txt
+docker build . -t $1
 
 retry cp -r . $pathSharedfoldDock
 sync
@@ -53,7 +53,7 @@ rm $pathSharedfoldDock/Dockerfile*
 sync
 retry cp configurationFile.R $pathSharedfoldDock/R-4.0.5_toBeInstalled/libraryInstall.R
 sync
-echo "Step : R library install. This might take some time." >> $pathSharedfoldDock/log.txt
+echo "Step : R library install. This might take some time."
 docker run -tv $pathSharedfoldHost/R-4.0.5_toBeInstalled:/scratch $1 /scratch/1_libraryInstall.sh
 mv Dockerfile Dockerfile_1
 sync
