@@ -38,7 +38,7 @@ dockerTempName=$(echo "$2" | tr '[:upper:]' '[:lower:]')
 dockerName=$(echo "$3" | tr '[:upper:]' '[:lower:]')
 j="$( basename "$1" )"
 echo ${j}
-pathSharedfoldDocks=$pathSharedfoldDock/${j}_visualStudio
+pathSharedfoldDocks=$pathSharedfoldDock/${j}_visualstudio_3.4.1
 if [ -d "$pathSharedfoldDocks" ]; then
     echo "Error: ${pathSharedfoldDocks} already exists. Use another name or delete the folder!!!!"
   exit 1
@@ -46,44 +46,44 @@ else
   echo "Installing files in ${pathSharedfoldDocks}..."
 
 fi
-mkdir -p $pathSharedfoldDock/${j}_visualStudio
-retry cp -r $1/* $pathSharedfoldDock/${j}_visualStudio
+mkdir -p $pathSharedfoldDock/${j}_visualstudio_3.4.1
+retry cp -r $1/* $pathSharedfoldDock/${j}_visualstudio_3.4.1
 sync
 swapoff -a
 swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
-retry cp -r ./* $pathSharedfoldDock/${j}_visualStudio
+retry cp -r ./* $pathSharedfoldDock/${j}_visualstudio_3.4.1
 sync
 swapoff -a
 swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
-cat ./tail >> $pathSharedfoldDock/${j}_visualStudio/Dockerfile
-echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo 'if test -f "./configurationFile.txt"; then' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo 'echo "$FILE exists."' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo 'else' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo 'pwd > configurationFile.txt' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo 'fi' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo "mkdir \$tt" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo "rm \$tt/id.txt" >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-echo "docker run -itv \$tt:/home/visualStudio/ -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt/id.txt --privileged=true -p 8888:8888  -e DISABLE_AUTH=true "$dockerName  >> $pathSharedfoldDock/${j}_visualStudio/script.sh
-chmod +x $pathSharedfoldDock/${j}_visualStudio/script.sh
+cat ./tail >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/Dockerfile
+echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo 'if test -f "./configurationFile.txt"; then' >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo 'echo "$FILE exists."' >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo 'else' >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo 'pwd > configurationFile.txt' >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo 'fi' >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo "mkdir \$tt" >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo "rm \$tt/id.txt" >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+echo "docker run -itv \$tt:/home/visualstudio_3.4.1/ -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt/id.txt --privileged=true -p 8888:8888  -e DISABLE_AUTH=true "$dockerName  >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+chmod +x $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
 
 
-echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_visualStudio/script.cmd
-echo '@Set "Build=%CD%"' >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
-echo '@Echo(%Build%' >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
-echo '@If Not Exist "configurationFile.txt" Set /P "=%Build%" 0<NUL 1>"configurationFile.txt"' >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
-echo "mkdir %Build%"  >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
-echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
-echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
-echo "docker run -itv %Build%:/home/visualStudio/ -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt -p 8888:8888   -e DISABLE_AUTH=true "$dockerName  >> $pathSharedfoldDock/${j}_visualStudio/script.cmd
-chmod +x $pathSharedfoldDock/${j}_visualStudio/script.sh
-if ! docker build $pathSharedfoldDock/${j}_visualStudio/ -t $dockerTempName; then
+echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.cmd
+echo '@Set "Build=%CD%"' >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.cmd
+echo '@Echo(%Build%' >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.cmd
+echo '@If Not Exist "configurationFile.txt" Set /P "=%Build%" 0<NUL 1>"configurationFile.txt"' >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.cmd
+echo "mkdir %Build%"  >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.cmd
+echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.cmd
+echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.cmd
+echo "docker run -itv %Build%:/home/visualstudio_3.4.1/ -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt -p 8888:8888   -e DISABLE_AUTH=true "$dockerName  >> $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.cmd
+chmod +x $pathSharedfoldDock/${j}_visualstudio_3.4.1/script.sh
+if ! docker build $pathSharedfoldDock/${j}_visualstudio_3.4.1/ -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1
 fi
