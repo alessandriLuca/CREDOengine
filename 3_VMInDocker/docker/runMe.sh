@@ -27,8 +27,10 @@ mkdir $2/${j}_wDocker
 
 retry cp -r $1/* $2/${j}_wDocker
 sync
+echo 3 > /proc/sys/vm/drop_caches
 retry cp ./ss.sh $2/${j}_wDocker
 sync
+echo 3 > /proc/sys/vm/drop_caches
 cat ./tail >> $2/${j}_wDocker/Dockerfile
 
 if ! docker build $2/${j}_wDocker/ -t youwillneverusethiname; then

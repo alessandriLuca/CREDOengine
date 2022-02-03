@@ -23,16 +23,20 @@ mkdir -p $4/$1
 
 retry cp -r $2/* $4/$1
 sync
+echo 3 > /proc/sys/vm/drop_caches
 retry cp -r $3/* $4/$1
 sync
+echo 3 > /proc/sys/vm/drop_caches
 echo "FROM library/ubuntu:20.04 as UBUNTU_BASE
 MAINTAINER alessandri.luca1991@gmail.com
 ARG DEBIAN_FRONTEND=noninteractive" > $4/$1/Dockerfile
 
 tail -n +4 $2/Dockerfile >> $4/$1/Dockerfile
 sync
+echo 3 > /proc/sys/vm/drop_caches
 tail -n +4 $3/Dockerfile >> $4/$1/Dockerfile
 sync
+echo 3 > /proc/sys/vm/drop_caches
 if ! docker build $4/$1/ -t youwillneverusethisname; then
     echo "Docker container failed!! check log"
     exit 1

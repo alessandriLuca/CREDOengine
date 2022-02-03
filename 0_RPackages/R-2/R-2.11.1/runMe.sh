@@ -51,6 +51,8 @@ mkdir -p $pathSharedfoldDock
 
 mv Dockerfile_1 Dockerfile
 sync
+echo 3 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
 dockerTempName=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 if ! docker build . -t $dockerTempName; then
     echo "Docker container failed!! check log"
@@ -58,10 +60,16 @@ if ! docker build . -t $dockerTempName; then
 fi
 retry cp -r . $pathSharedfoldDock
 sync
+echo 3 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
 rm $pathSharedfoldDock/Dockerfile*
 sync
+echo 3 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
 retry cp configurationFile.R $pathSharedfoldDock/R-2.11.1_toBeInstalled/libraryInstall.R
 sync
+echo 3 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
 echo "Step : R library install. This might take some time."
 if ! docker run -tv $pathSharedfoldHost/R-2.11.1_toBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
     echo "Docker container failed!! check log"
@@ -69,12 +77,20 @@ if ! docker run -tv $pathSharedfoldHost/R-2.11.1_toBeInstalled:/scratch $dockerT
 fi
 mv Dockerfile Dockerfile_1
 sync
+echo 3 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
 mv Dockerfile_2 Dockerfile
 sync
+echo 3 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
 mv Dockerfile Dockerfile_2
 sync
+echo 3 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
 cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
 sync
+echo 3 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
 if ! docker build $pathSharedfoldDock/ -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1

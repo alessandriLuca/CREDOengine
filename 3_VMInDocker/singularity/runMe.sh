@@ -26,8 +26,10 @@ mkdir $2/${j}_wSingularity
 
 retry cp -r $1/* $2/${j}_wSingularity
 sync
+echo 3 > /proc/sys/vm/drop_caches
 retry cp -r ./* $2/${j}_wSingularity
 sync
+echo 3 > /proc/sys/vm/drop_caches
 cat ./tail >> $2/${j}_wSingularity/Dockerfile
 
 if ! docker build $2/${j}_wSingularity/ -t youwillneverusethiname; then

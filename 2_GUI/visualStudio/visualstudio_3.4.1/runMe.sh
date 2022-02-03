@@ -49,8 +49,10 @@ fi
 mkdir -p $pathSharedfoldDock/${j}_visualStudio
 retry cp -r $1/* $pathSharedfoldDock/${j}_visualStudio
 sync
+echo 3 > /proc/sys/vm/drop_caches
 retry cp -r ./* $pathSharedfoldDock/${j}_visualStudio
 sync
+echo 3 > /proc/sys/vm/drop_caches
 cat ./tail >> $pathSharedfoldDock/${j}_visualStudio/Dockerfile
 echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_visualStudio/script.sh
 echo 'if test -f "./configurationFile.txt"; then' >> $pathSharedfoldDock/${j}_visualStudio/script.sh
