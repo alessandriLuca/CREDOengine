@@ -55,10 +55,16 @@ mkdir -p $pathSharedfoldDock/${j}_jupyter_notebook
 
 retry cp -r $1/* $pathSharedfoldDock/${j}_jupyter_notebook
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 
 retry cp -r ./RtoBeInstalled $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
     echo "Docker container failed!! check log"
@@ -66,6 +72,9 @@ if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; 
 fi
 retry cp -r ./PtoBeInstalled $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 echo "Step library Install. Might take some time. "
 if ! docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/PtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
@@ -97,6 +106,9 @@ if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; 
 fi
 retry cp ./Rprofile $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 echo 'IRkernel::installspec()' >> $pathSharedfoldDock/${j}_jupyter_notebook/rscript.R
 echo 'COPY rscript.R /home/' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
@@ -105,6 +117,9 @@ echo 'COPY Rprofile /root/.Rprofile' >> $pathSharedfoldDock/${j}_jupyter_noteboo
 echo 'ENV SHELL=/bin/bash'  >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 cat ./tail >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 
 echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_jupyter_notebook/script.sh

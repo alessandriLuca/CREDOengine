@@ -49,9 +49,15 @@ fi
 mkdir -p $pathSharedfoldDock/${j}_visualStudio
 retry cp -r $1/* $pathSharedfoldDock/${j}_visualStudio
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 retry cp -r ./* $pathSharedfoldDock/${j}_visualStudio
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 cat ./tail >> $pathSharedfoldDock/${j}_visualStudio/Dockerfile
 echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_visualStudio/script.sh

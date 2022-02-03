@@ -51,9 +51,15 @@ fi
 mkdir -p $pathSharedfoldDock/${j}_rstudio_21_09
 retry cp -r $1/* $pathSharedfoldDock/${j}_rstudio_21_09
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 retry cp -r ./* $pathSharedfoldDock/${j}_rstudio_21_09
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 cat ./tail >> $pathSharedfoldDock/${j}_rstudio_21_09/Dockerfile
 echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_rstudio_21_09/script.sh

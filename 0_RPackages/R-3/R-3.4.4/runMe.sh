@@ -51,6 +51,9 @@ mkdir -p $pathSharedfoldDock
 
 mv Dockerfile_1 Dockerfile
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 dockerTempName=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 if ! docker build . -t $dockerTempName; then
@@ -59,12 +62,21 @@ if ! docker build . -t $dockerTempName; then
 fi
 retry cp -r . $pathSharedfoldDock
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 rm $pathSharedfoldDock/Dockerfile*
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 retry cp configurationFile.R $pathSharedfoldDock/R-3.4.4_toBeInstalled/libraryInstall.R
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 echo "Step : R library install. This might take some time."
 if ! docker run -tv $pathSharedfoldHost/R-3.4.4_toBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
@@ -73,15 +85,27 @@ if ! docker run -tv $pathSharedfoldHost/R-3.4.4_toBeInstalled:/scratch $dockerTe
 fi
 mv Dockerfile Dockerfile_1
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 mv Dockerfile_2 Dockerfile
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 mv Dockerfile Dockerfile_2
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 if ! docker build $pathSharedfoldDock/ -t $dockerTempName; then
     echo "Docker container failed!! check log"

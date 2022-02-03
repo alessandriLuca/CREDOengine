@@ -51,6 +51,9 @@ fi
 mkdir -p $pathSharedfoldDock
 mv Dockerfile_1 Dockerfile
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 dockerTempName=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 echo $dockerTempName
@@ -60,10 +63,16 @@ if ! docker build . -t $dockerTempName; then
 fi
 retry cp -r . $pathSharedfoldDock
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 rm $pathSharedfoldDock/Dockerfile*
 retry cp configurationFile.sh $pathSharedfoldDock/Python3.8.6_toBeInstalled/configurationFile.sh
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 echo "Step : python library install. This might take some time."
 if ! docker run -tv $pathSharedfoldHost/Python3.8.6_toBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
@@ -76,6 +85,9 @@ mv Dockerfile Dockerfile_2
 
 retry cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
 sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 if ! docker build $pathSharedfoldDock/ -t $dockerTempName; then
     echo "Docker container failed!! check log"
