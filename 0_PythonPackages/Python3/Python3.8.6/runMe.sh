@@ -39,7 +39,6 @@ pathSharedfoldDock=$3/$2
 somedirpath=$(cat $4)
 pathSharedfoldHost="$somedirpath"/"$( basename "$pathSharedfoldDock" )"
 echo $pathSharedfoldHost
-mkdir -p $pathSharedfoldDock
 
 fi
 if [ -d "$pathSharedfoldDock" ]; then
@@ -49,6 +48,7 @@ else
   echo "Installing files in ${pathSharedfoldDock}..."
 
 fi
+mkdir -p $pathSharedfoldDock
 mv Dockerfile_1 Dockerfile
 sync
 dockerTempName=$(echo "$1" | tr '[:upper:]' '[:lower:]')

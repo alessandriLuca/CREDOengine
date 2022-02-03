@@ -28,8 +28,7 @@ then
 echo "hope you are on IOS or Linux"
 pathSharedfoldDock=$3/$2
 pathSharedfoldHost=$3/$2
-mkdir -p $pathSharedfoldDock
-echo "hey"
+
 fi
 
 if [ $# -eq 4 ]
@@ -39,7 +38,6 @@ pathSharedfoldDock=$3/$2
 somedirpath=$(cat $4)
 pathSharedfoldHost="$somedirpath"/"$( basename "$pathSharedfoldDock" )"
 echo $pathSharedfoldHost
-mkdir -p $pathSharedfoldDock
 
 fi
 if [ -d "$pathSharedfoldDock" ]; then
@@ -49,6 +47,8 @@ else
   echo "Installing files in ${pathSharedfoldDock}..."
 
 fi
+mkdir -p $pathSharedfoldDock
+
 mv Dockerfile_1 Dockerfile
 sync
 dockerTempName=$(echo "$1" | tr '[:upper:]' '[:lower:]')

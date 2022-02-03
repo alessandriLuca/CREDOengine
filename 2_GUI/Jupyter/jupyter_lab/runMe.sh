@@ -27,7 +27,6 @@ then
 echo "hope you are on IOS or Linux"
 pathSharedfoldDock=$4
 pathSharedfoldHost=$4
-mkdir $pathSharedfoldDock
 fi
 
 if [ $# -eq 5 ]
@@ -36,8 +35,6 @@ echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
 pathSharedfoldDock=$4
 pathSharedfoldHost=$(cat $5)
 echo $pathSharedfoldHost
-mkdir $pathSharedfoldDock
-
 fi
 
 dockerTempName=$(echo "$2" | tr '[:upper:]' '[:lower:]')
