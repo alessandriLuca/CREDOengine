@@ -30,3 +30,8 @@ retry cp -r ./* $2/${j}_wSingularity
 sync
 cat ./tail >> $2/${j}_wSingularity/Dockerfile
 
+if ! docker build $2/${j}_wSingularity/ -t youwillneverusethiname; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
+echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.'

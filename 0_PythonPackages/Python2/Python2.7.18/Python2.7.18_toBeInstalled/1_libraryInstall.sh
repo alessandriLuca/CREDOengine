@@ -1,5 +1,7 @@
 #!/bin/bash 
-/scratch/configurationFile.sh
+if ! /scratch/configurationFile.sh; then
+    exit 1
+fi
 pipdeptree -fl > /scratch/out.txt
 
 #SCARICO TUTTI I FILE
@@ -17,7 +19,9 @@ a=$(grep $(awk -v c=$VARIABLE 'NR==c { print $VARIABLE }' /scratch/out.txt | sed
 if [[ -n "$a" ]] ; then echo 'pip2 install --no-dependencies /tmp/packages/'$a >> scratch/listForDockerfile.sh ; fi
 done
 chmod 777 /scratch/listForDockerfile.sh
-7za -v25165824 a /scratch/install_files.7z /scratch/packages
+if ! 7za -v25165824 a /scratch/install_files.7z /scratch/packages; then
+    exit 1
+fi
 chmod -R 777 /scratch/
 rm -r /scratch/packages
 rm /scratch/pip.log

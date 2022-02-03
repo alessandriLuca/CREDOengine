@@ -27,5 +27,12 @@ mkdir $2/${j}_wDocker
 
 retry cp -r $1/* $2/${j}_wDocker
 sync
+retry cp ./ss.sh $2/${j}_wDocker
+sync
 cat ./tail >> $2/${j}_wDocker/Dockerfile
 
+if ! docker build $2/${j}_wDocker/ -t youwillneverusethiname; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
+echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n'

@@ -33,3 +33,8 @@ tail -n +4 $2/Dockerfile >> $4/$1/Dockerfile
 sync
 tail -n +4 $3/Dockerfile >> $4/$1/Dockerfile
 sync
+if ! docker build $4/$1/ -t youwillneverusethisname; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
+echo 'DockerFile generation is done.'

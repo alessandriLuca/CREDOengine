@@ -76,3 +76,9 @@ echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_rstudio_2
 echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_rstudio_21_09/script.cmd
 echo "docker run -itv %Build%:/home/rstudio/ -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt -p 8888:8888   -e DISABLE_AUTH=true "$dockerName  >> $pathSharedfoldDock/${j}_rstudio_21_09/script.cmd
 chmod +x $pathSharedfoldDock/${j}_rstudio_21_09/script.sh
+
+if ! docker build $pathSharedfoldDock/${j}_rstudio_21_09/ -t $dockerTempName; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
+echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$dockerTempName

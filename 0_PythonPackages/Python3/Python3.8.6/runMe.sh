@@ -52,19 +52,30 @@ mkdir -p $pathSharedfoldDock
 mv Dockerfile_1 Dockerfile
 sync
 dockerTempName=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-docker build . -t $dockerTempName
+echo $dockerTempName
+if ! docker build . -t $dockerTempName; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 retry cp -r . $pathSharedfoldDock
 sync
 rm $pathSharedfoldDock/Dockerfile*
 retry cp configurationFile.sh $pathSharedfoldDock/Python3.8.6_toBeInstalled/configurationFile.sh
 sync
 echo "Step : python library install. This might take some time."
-docker run -tv $pathSharedfoldHost/Python3.8.6_toBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh # DEVE ESSERE IL PATH DI HOST, DEVE ESSERE LA SHARED FOLDER
+if ! docker run -tv $pathSharedfoldHost/Python3.8.6_toBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 mv Dockerfile Dockerfile_1
 mv Dockerfile_2 Dockerfile
 mv Dockerfile Dockerfile_2
 
 retry cp Dockerfile_2 $pathSharedfoldDock/Dockerfile
 sync
+if ! docker build $pathSharedfoldDock/ -t $dockerTempName; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$dockerTempName
 

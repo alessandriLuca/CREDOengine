@@ -1,5 +1,7 @@
 #!/bin/bash 
-/scratch/configurationFile.sh
+if ! /scratch/configurationFile.sh; then
+    exit 1
+fi
 pipdeptree -fl > /scratch/out.txt
 
 #SCARICO TUTTI I FILE
@@ -20,7 +22,9 @@ awk '!visited[$0]++' /scratch/listForDockerfileP.sh > /scratch/listForDockerfile
 rm /scratch/listForDockerfileP.sh
 mv /scratch/listForDockerfileP2.sh /scratch/listForDockerfileP.sh
 chmod 777 /scratch/listForDockerfileP.sh
-7za -v25165824 a /scratch/install_filesP.7z /scratch/packages
+if ! 7za -v25165824 a /scratch/install_filesP.7z /scratch/packages; then
+    exit 1
+fi
 rm -r /scratch/packages
 rm /scratch/pip.log
 rm /scratch/out.txt

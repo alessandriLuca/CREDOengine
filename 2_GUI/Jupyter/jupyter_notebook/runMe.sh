@@ -58,25 +58,40 @@ sync
 
 retry cp -r ./RtoBeInstalled $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
-docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName
+if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 retry cp -r ./PtoBeInstalled $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
 echo "Step library Install. Might take some time. "
-docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/PtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh
+if ! docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/PtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 
 echo 'COPY PtoBeInstalled/install_filesP* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN cd /tmp/ && 7za -y x "install_filesP.7z*"' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'COPY PtoBeInstalled/listForDockerfileP.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN /tmp/listForDockerfileP.sh ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
-docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName
+if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 echo "Step library Install. Might take some time. "
-docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/RtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh
+if ! docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/RtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 echo 'COPY RtoBeInstalled/install_filesR* /tmp/' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 
-docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName
+if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 retry cp ./Rprofile $pathSharedfoldDock/${j}_jupyter_notebook/
 sync
 echo 'IRkernel::installspec()' >> $pathSharedfoldDock/${j}_jupyter_notebook/rscript.R
@@ -113,3 +128,9 @@ echo "mkdir %Build%"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 echo "docker run -itv %Build%:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt  -p  8888:8888 "$dockerName  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
+
+if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook/ -t $dockerTempName; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
+echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$dockerTempName
