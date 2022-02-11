@@ -1,1 +1,1 @@
-./runMe.sh /home/lucastormreig/dockerRes/merged2_rstudio_21_09/  /home/lucastormreig/dockerRes/
+./runMe.sh /home/lucastormreig/dockerRes/merged2_jupyter_lab/  /home/lucastormreig/dockerRes/
