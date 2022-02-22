@@ -1,0 +1,1 @@
+sharedpath:H+/sharedFolder/
