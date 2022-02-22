@@ -1,4 +1,4 @@
-Temp Docker:H+U+R
+Temp Docker:U+R
 Result Folder Name:U+empty
 sharedpath:H+/sharedFolder/
 configpath:H+/sharedFolder/configurationFile.txt
