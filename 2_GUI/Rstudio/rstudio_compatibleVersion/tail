@@ -1,0 +1,22 @@
+COPY rstudioServer /rstudioServer
+RUN cd /rstudioServer/ && 7za -y x "*.7z*"
+RUN cd /rstudioServer/rstudio-rstudio-fc9e217/dependencies/linux/ && ./install-dependencies-focal 
+RUN cd /rstudioServer/rstudio-rstudio-fc9e217/ &&  cmake . -DRSTUDIO_TARGET=Server -DCMAKE_BUILD_TYPE=Release 
+RUN cd /rstudioServer/rstudio-rstudio-fc9e217/ &&  make install 
+
+RUN echo "PATH=${PATH}" >> /usr/local/lib/R/etc/Renviron \
+  && useradd rstudio \
+  && echo "rstudio:rstudio" | chpasswd \
+	&& mkdir /home/rstudio \
+	&& chown rstudio:rstudio /home/rstudio \
+	&& addgroup rstudio staff 
+
+
+EXPOSE 8888
+
+ENV USER=rstudio
+COPY rserver.conf /etc/rstudio/rserver.conf
+RUN rstudio-server verify-installation
+COPY cc.R /cc.R
+RUN Rscript /cc.R
+CMD ["rserver", "--server-daemonize", "0", "--auth-none", "1"]
