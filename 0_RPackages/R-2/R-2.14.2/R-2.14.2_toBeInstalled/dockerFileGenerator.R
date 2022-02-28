@@ -16,9 +16,8 @@ ll=c()
 ll=append(ll,"R CMD INSTALL --build \\")
 
 for(i in toInstall){
-ll=append(ll,paste("/tmp/packages/",basename(as.vector(toDownload[grep(paste(i,"_",sep=""),toDownload)]))," \\",sep=""))
+ll=append(ll,paste("/tmp/packages/",basename(as.vector(toDownload[grep(paste("/",i,"_",sep=""),toDownload)]))," \\",sep=""))
 }
 write(unique(ll),"/scratch/listForDockerfile.sh")
-system("7za -v25165824 a /scratch/install_files.7z /scratch/packages")
+system("7za -v25165824 a /scratch/install_files.7z /scratch/packages") 
 system("chmod 777 -R /scratch/")
-
