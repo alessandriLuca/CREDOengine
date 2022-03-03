@@ -46,4 +46,5 @@ COPY R-3.2.5_toBeInstalled/install_files.7z* /tmp/
 RUN cd /tmp/ && 7za -y x "*.7z*" 
 COPY R-3.2.5_toBeInstalled/listForDockerfile.sh /tmp/
 RUN /tmp/listForDockerfile.sh
+RUN apt-get install -y libgit2-dev
 

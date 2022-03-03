@@ -1,1 +1,3 @@
-install.packages('Rtsne', repos='http://cran.us.r-project.org') 
+cran("Rtsne")
+#github("")
+#bioconductor("")

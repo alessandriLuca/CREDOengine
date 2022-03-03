@@ -1,5 +1,5 @@
 #!/bin/bash 
-if ! nohup Rscript /scratch/libraryInstall.R > /scratch/nohup.out; then
+if ! nohup Rscript /scratch/libraryInstall2.R > /scratch/nohup.out; then
     exit 1
 fi
 if ! Rscript /scratch/dockerFileGenerator.R; then
