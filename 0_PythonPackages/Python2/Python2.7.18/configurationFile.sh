@@ -1,4 +1,4 @@
 #!/bin/bash 
 #type here all libraries that needs to be installed
-pip2 -v --log /scratch/pip.log install numpy
-
+download numpy
+downloadgit https://github.com/benjaminp/six

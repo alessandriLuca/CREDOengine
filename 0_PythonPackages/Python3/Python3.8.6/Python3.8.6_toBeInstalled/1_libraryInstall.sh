@@ -1,5 +1,5 @@
 #!/bin/bash 
-if ! /scratch/configurationFile.sh; then
+if ! /scratch/configurationFile2.sh; then
     exit 1
 fi
 pipdeptree -fl > /scratch/out.txt

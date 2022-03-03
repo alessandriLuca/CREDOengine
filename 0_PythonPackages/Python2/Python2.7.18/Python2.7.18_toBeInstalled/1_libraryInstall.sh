@@ -1,5 +1,5 @@
 #!/bin/bash 
-if ! /scratch/configurationFile.sh; then
+if ! /scratch/configurationFile2.sh; then
     exit 1
 fi
 pipdeptree -fl > /scratch/out.txt
@@ -16,13 +16,12 @@ sorting=$(cat -n /scratch/counts.txt | sort -nk +2 -r | sed 's/\|/ /'|awk '{prin
 for VARIABLE in $sorting
 do
 a=$(grep $(awk -v c=$VARIABLE 'NR==c { print $VARIABLE }' /scratch/out.txt | sed 's/ //g' | sed -r 's/[-]+/_/g' | sed -r 's/[==]+/-/g') <<< $list)
-if [[ -n "$a" ]] ; then echo 'pip2 install --no-dependencies /tmp/packages/'$a >> scratch/listForDockerfile.sh ; fi
+if [[ -n "$a" ]] ; then echo 'pip install --no-dependencies /tmp/packages/'$a >> scratch/listForDockerfile.sh ; fi
 done
 chmod 777 /scratch/listForDockerfile.sh
 if ! 7za -v25165824 a /scratch/install_files.7z /scratch/packages; then
     exit 1
 fi
-chmod -R 777 /scratch/
 rm -r /scratch/packages
 rm /scratch/pip.log
 rm /scratch/out.txt
