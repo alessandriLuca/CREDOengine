@@ -38,7 +38,7 @@ printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 cat ./tail >> $2/${j}_wSingularity/Dockerfile
 
-if ! docker build $2/${j}_wSingularity/ -t youwillneverusethiname; then
+if ! docker build --platform linux/amd64 $2/${j}_wSingularity/ -t youwillneverusethiname; then
     echo "Docker container failed!! check log"
     exit 1
 fi

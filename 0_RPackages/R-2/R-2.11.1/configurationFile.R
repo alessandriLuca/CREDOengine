@@ -1,3 +1,3 @@
-cran("BayesValidate")
+cran("desiR")
 #github("")
 #bioconductor("")

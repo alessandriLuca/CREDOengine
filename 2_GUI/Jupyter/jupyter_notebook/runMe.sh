@@ -34,6 +34,11 @@ then
 echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
 pathSharedfoldDock=$4
 pathSharedfoldHost=$(cat $5)
+if ! test -f "$pathSharedfoldHost"; then
+    echo "ConfigurationFile does not exists. You dont have access to the dockerFileGenerator power. Run again the script for DockerFileGeneratorGUI to recreate the file."
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 echo $pathSharedfoldHost
 fi
 
@@ -66,7 +71,7 @@ swapoff -a
 swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
-if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
+if ! docker build --platform linux/amd64 $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1
 fi
@@ -77,7 +82,7 @@ swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 echo "Step library Install. Might take some time. "
-if ! docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/PtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
+if ! docker run --platform linux/amd64 -tv $pathSharedfoldHost/${j}_jupyter_notebook/PtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
     echo "Docker container failed!! check log"
     exit 1
 fi
@@ -86,12 +91,12 @@ echo 'COPY PtoBeInstalled/install_filesP* /tmp/' >> $pathSharedfoldDock/${j}_jup
 echo 'RUN cd /tmp/ && 7za -y x "install_filesP.7z*"' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'COPY PtoBeInstalled/listForDockerfileP.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN /tmp/listForDockerfileP.sh ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
-if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
+if ! docker build --platform linux/amd64 $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1
 fi
 echo "Step library Install. Might take some time. "
-if ! docker run -tv $pathSharedfoldHost/${j}_jupyter_notebook/RtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
+if ! docker run --platform linux/amd64 -tv $pathSharedfoldHost/${j}_jupyter_notebook/RtoBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
     echo "Docker container failed!! check log"
     exit 1
 fi
@@ -100,7 +105,7 @@ echo 'RUN cd /tmp/ && 7za -y x "install_filesR.7z*"' >> $pathSharedfoldDock/${j}
 echo 'COPY RtoBeInstalled/listForDockerfileR.sh /tmp/ ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 echo 'RUN /tmp/listForDockerfileR.sh ' >> $pathSharedfoldDock/${j}_jupyter_notebook/Dockerfile
 
-if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
+if ! docker build --platform linux/amd64 $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1
 fi
@@ -122,7 +127,7 @@ swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 
-echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
+echo "docker build --platform linux/amd64 . -t " $dockerName  > $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
 echo 'if test -f "./configurationFile.txt"; then' >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
 echo 'echo "$FILE exists."' >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
 echo 'else' >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
@@ -132,14 +137,14 @@ echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/${j}_jupyter_not
 echo "mkdir \$tt" >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
 echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
 echo "rm \$tt/id.txt" >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
-echo "docker run -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt/id.txt --privileged=true -p  8888:8888 "$dockerName  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
+echo "docker run --platform linux/amd64 -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt/id.txt --privileged=true -p  8888:8888 "$dockerName  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
 chmod +x $pathSharedfoldDock/${j}_jupyter_notebook/script.sh
 
 
 
 
 
-echo "docker build . -t " $dockerName  > $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
+echo "docker build --platform linux/amd64 . -t " $dockerName  > $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 echo '@Set "Build=%CD%"' >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 echo '@Echo(%Build%' >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 echo '@If Not Exist "configurationFile.txt" Set /P "=%Build%" 0<NUL 1>"configurationFile.txt"' >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
@@ -147,9 +152,9 @@ echo '@If Not Exist "configurationFile.txt" Set /P "=%Build%" 0<NUL 1>"configura
 echo "mkdir %Build%"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
-echo "docker run -itv %Build%:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt  -p  8888:8888 "$dockerName  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
+echo "docker run --platform linux/amd64 -itv %Build%:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt  -p  8888:8888 "$dockerName  >> $pathSharedfoldDock/${j}_jupyter_notebook/script.cmd
 
-if ! docker build $pathSharedfoldDock/${j}_jupyter_notebook/ -t $dockerTempName; then
+if ! docker build --platform linux/amd64 $pathSharedfoldDock/${j}_jupyter_notebook/ -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1
 fi

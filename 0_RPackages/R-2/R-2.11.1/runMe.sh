@@ -37,6 +37,11 @@ echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
 pathSharedfoldDock=$3/$2
 somedirpath=$(cat $4)
 pathSharedfoldHost="$somedirpath"/"$( basename "$pathSharedfoldDock" )"
+if ! test -f "$pathSharedfoldHost"; then
+    echo "ConfigurationFile does not exists. You dont have access to the dockerFileGenerator power. Run again the script for DockerFileGeneratorGUI to recreate the file."
+    echo "Docker container failed!! check log"
+    exit 1
+fi
 echo $pathSharedfoldHost
 
 fi
@@ -57,7 +62,7 @@ printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 echo 3 > /proc/sys/vm/drop_caches
 dockerTempName=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-if ! docker build . -t $dockerTempName; then
+if ! docker build  --platform linux/amd64 . -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1
 fi
@@ -83,7 +88,7 @@ printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 echo 3 > /proc/sys/vm/drop_caches
 echo "Step : R library install. This might take some time."
-if ! docker run -tv $pathSharedfoldHost/R-2.11.1_toBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
+if ! docker run  --platform linux/amd64 -tv $pathSharedfoldHost/R-2.11.1_toBeInstalled:/scratch $dockerTempName /scratch/1_libraryInstall.sh; then
     echo "Docker container failed!! check log"
     exit 1
 fi
@@ -115,7 +120,7 @@ swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
 echo 3 > /proc/sys/vm/drop_caches
-if ! docker build $pathSharedfoldDock/ -t $dockerTempName; then
+if ! docker build  --platform linux/amd64 $pathSharedfoldDock/ -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1
 fi

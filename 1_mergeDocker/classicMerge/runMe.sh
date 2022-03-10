@@ -49,7 +49,7 @@ swapoff -a
 swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
-if ! docker build $4/$1/ -t youwillneverusethisname; then
+if ! docker build --platform linux/amd64 $4/$1/ -t youwillneverusethisname; then
     echo "Docker container failed!! check log"
     exit 1
 fi
