@@ -34,7 +34,7 @@ then
 echo "WORKS ONLY IN DOCKER CONTAINER!!!!!!!!!!!!!!!!!!!!"
 pathSharedfoldDock=$4
 pathSharedfoldHost=$(cat $5)
-if ! test -f "$4"; then
+if ! test -f "$5"; then
     echo "ConfigurationFile does not exists. You dont have access to the dockerFileGenerator power. Run again the script for DockerFileGeneratorGUI to recreate the file."
     echo "Docker container failed!! check log"
     exit 1
