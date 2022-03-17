@@ -9,3 +9,4 @@ rm -r /scratch/packages
 rm /scratch/nohup.out
 rm /scratch/toDownload.txt
 rm /scratch/toInstall.txt
+chmod -R 777 /scratch/
