@@ -11,6 +11,7 @@ RUN apt-get update \
     && apt-get -y install pkg-config\
     && apt-get update && apt-get install -y --no-install-recommends apt-utils \
     && apt-get -y install libhdf5-dev
+RUN apt-get update && apt install -y libudunits2-dev libgdal-dev
 COPY p7zip_16.02 /tmp/
 RUN apt-get update \
     && apt-get install -y wget \
