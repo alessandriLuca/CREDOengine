@@ -34,6 +34,7 @@ COPY pipdeptree-2.1.0-py3-none-any.whl /tmp/
 RUN apt-get update \
     && apt-get install -y git
 RUN pip3 install /tmp/pipdeptree-2.1.0-py3-none-any.whl
+COPY anaconda /anaconda/
 COPY Python3.8.6_toBeInstalled/install_files.7z* /tmp/
 RUN cd /tmp/ && 7za -y x "*.7z*"
 COPY Python3.8.6_toBeInstalled/listForDockerfile.sh /tmp/

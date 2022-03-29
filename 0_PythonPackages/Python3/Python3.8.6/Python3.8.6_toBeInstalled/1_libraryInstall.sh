@@ -18,6 +18,7 @@ do
 a=$(grep $(awk -v c=$VARIABLE 'NR==c { print $VARIABLE }' /scratch/out.txt | sed 's/ //g' | sed -r 's/[-]+/_/g' | sed -r 's/[==]+/-/g') <<< $list)
 if [[ -n "$a" ]] ; then echo 'pip3 install --no-dependencies /tmp/packages/'$a >> scratch/listForDockerfile.sh ; fi
 done
+grep snowflakes /scratch/pip.log >> scratch/listForDockerfile.sh
 chmod 777 /scratch/listForDockerfile.sh
 if ! 7za -v25165824 a /scratch/install_files.7z /scratch/packages; then
     exit 1
