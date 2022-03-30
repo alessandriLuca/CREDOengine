@@ -71,6 +71,12 @@ swapoff -a
 swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
+retry cp -r ./scripts $pathSharedfoldDock/${j}_jupyter_notebook/
+sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
+echo 3 > /proc/sys/vm/drop_caches
 if ! docker build --platform linux/amd64 $pathSharedfoldDock/${j}_jupyter_notebook -t $dockerTempName; then
     echo "Docker container failed!! check log"
     exit 1

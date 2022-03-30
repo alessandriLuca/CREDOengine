@@ -73,6 +73,12 @@ swapoff -a
 swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
+retry cp -r ./scripts $pathSharedfoldDock/${j}_jupyter_lab/
+sync
+swapoff -a
+swapon -a
+printf '\n%s\n' 'Ram-cache and Swap Cleared'
+echo 3 > /proc/sys/vm/drop_caches
 if ! docker build --platform linux/amd64 $pathSharedfoldDock/${j}_jupyter_lab -t $dockerTempName; then
     exit 1
 fi

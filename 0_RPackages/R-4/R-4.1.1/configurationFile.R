@@ -1,3 +1,3 @@
 cran("Rtsne")
-bioconductor("GenomicRanges")
-github("kendomaniac/rCASC")
+#bioconductor("GenomicRanges")
+#github("kendomaniac/rCASC")

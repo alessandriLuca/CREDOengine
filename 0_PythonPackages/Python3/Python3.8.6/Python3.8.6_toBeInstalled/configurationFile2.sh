@@ -19,7 +19,7 @@ cd ..
 rm -r /anaconda 
 export PATH="/opt/conda/bin/:$PATH"
 conda install conda-pack -y
-conda create --name snowflakes $1 -y
+conda create --name snowflakes $1 ipykernel -y
 mkdir /scratch/packages/
 conda pack -n snowflakes -o /scratch/packages/$1.tar.gz
 echo 'mkdir -p snowflakes/'$1' && tar -xzf /tmp/packages/'$1'.tar.gz -C snowflakes/'$1 >> /scratch/pip.log
@@ -32,7 +32,7 @@ cd ..
 rm -r /anaconda 
 export PATH="/opt/conda/bin/:$PATH"
 conda install conda-pack -y
-conda create -c bioconda --name snowflakes $1 -y
+conda create -c bioconda --name snowflakes $1 ipykernel -y
 mkdir /scratch/packages/
 conda pack -n snowflakes -o /scratch/packages/$1.tar.gz
 echo 'mkdir -p snowflakes/'$1' && tar -xzf /tmp/packages/'$1'.tar.gz -C snowflakes/'$1 >> /scratch/pip.log
