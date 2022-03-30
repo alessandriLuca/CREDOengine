@@ -3,3 +3,4 @@
 download pandas
 downloadgit https://github.com/httpie/httpie
 downloadConda biopython
+downloadbioconda mageck
