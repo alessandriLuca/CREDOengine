@@ -124,5 +124,36 @@ if ! docker build  --platform linux/amd64 $pathSharedfoldDock/ -t $dockerTempNam
     echo "Docker container failed!! check log"
     exit 1
 fi
-echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n You can remove the temporary docker with docker rmi '$dockerTempName
+
+echo "docker build --platform linux/amd64 . -t " $dockerTempName  > $pathSharedfoldDock/script.sh
+echo 'if test -f "./configurationFile.txt"; then' >> $pathSharedfoldDock/script.sh
+echo 'echo "$FILE exists."' >> $pathSharedfoldDock/script.sh
+echo 'else' >> $pathSharedfoldDock/script.sh
+echo 'pwd > configurationFile.txt' >> $pathSharedfoldDock/script.sh
+echo 'fi' >> $pathSharedfoldDock/script.sh
+echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/script.sh
+echo "mkdir \$tt" >> $pathSharedfoldDock/script.sh
+echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/script.sh
+echo "rm \$tt/id.txt" >> $pathSharedfoldDock/script.sh
+echo "docker run --platform linux/amd64 -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt/id.txt "$dockerTempName  >> $pathSharedfoldDock/script.sh
+chmod +x $pathSharedfoldDock/script.sh
+
+
+
+
+
+echo "docker build --platform linux/amd64 . -t " $dockerTempName  > $pathSharedfoldDock/script.cmd
+echo '@Set "Build=%CD%"' >> $pathSharedfoldDock/script.cmd
+echo '@Echo(%Build%' >> $pathSharedfoldDock/script.cmd
+echo '@If Not Exist "configurationFile.txt" Set /P "=%Build%" 0<NUL 1>"configurationFile.txt"' >> $pathSharedfoldDock/script.cmd
+
+echo "mkdir %Build%"  >> $pathSharedfoldDock/script.cmd
+echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/script.cmd
+echo "del %Build%\id.txt"  >> $pathSharedfoldDock/script.cmd
+echo "docker run --platform linux/amd64 -itv %Build%:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  %Build%\id.txt "$dockerTempName  >> $pathSharedfoldDock/script.cmd
+
+
+
+
+echo 'DockerFile generation is done. Locate in DockerFolder and run script.sh or script.cmd'
 
