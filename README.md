@@ -1,20 +1,53 @@
 # dockerFileGenerator
+The Docker engine opened the way to reproducibility in the bioinformatics arena. Furthermore, docker containerization is getting very common as tools to facilitate the distribution of  bioinformatics workflows. Although, it is now very much spread in the biological community because of the complexity of the steps required to build from scratch a docker container. Please use the GUI if you prefer a more automatic way and easy way to generate docker and dockerfiles https://github.com/alessandriLuca/dockerFileGeneratorGUI.
+The docker customization will be achieved through the following steps:  
+Selecting a specific Python version 
+Selecting a specific R version 
+Defining the list of python/R libraries to be included in the docker image 
+Selecting a specific GUI (jupyterlab, visual studio or Rstudio)
+Selecting the option of executing docker/singularity instances in docker 
 
-In order to generate the dockerfile for a specific version of R/python and with specific libraries the instruction are pretty easy, just follow the steps : 
-1) Choose R or python folder 
-2) Now choose the specific version of R or python 
-3) Open the configurationFile.sh with a text editor : 
-    Is already present an example of how to install libraries. We will see now 4 examples, R, R with bioconductor,python2 and python3,
-    a) R install.packages('Rtsne', repos='http://cran.us.r-project.org') # If you want to add other libraries simply use the command that you would use in order to install it in your local machine
-    b) install.packages('BiocManager', repos='http://cran.us.r-project.org')
-       BiocManager::install("GenomicRanges") # GenomicRanges needs BiocManager to be installed. As before write in this file everything that you would write from your local installation. 
-     c) pip2 -v --log /scratch/pip.log install numpy
-pip2 -v --log /scratch/pip.log install pandas #Python2 requires pip2, different from python3 libraries that requires pip3. Here add also other libraries copying the same structure with pip2 -v --log /scratch/pip.log install libraries. 
-    d) pip3 -v --log /scratch/pip.log install pandas # As previously said, python3 requires pip3 command. The configurationFile structur for python3 is the same as the structure file for python2. 
-4) Once the configurationFile.sh is modified with the chosen libraries run the runMe.sh script feeding it with two parameters, a docker temporary file name and the folder name, that will store all the necessary files for the docker file to be generated. 
-5) Once the installation is finished enter in the just created folder with the folder name that you gave to the runMe.sh script. In this folder you have all the necessary files to build the docker with the specific libraries. Interesting thing is that all the libraries are already downloaded, that means that no matter what will happen in the future, broken link are no more a problem for R and python packages. Real bioinformatic Reproducibility is one step closer. 
+DockerFileGenerator can also be used using only the command line. With this approach you can generate dockerfile and docker container step by step and with more personalization.  DockerFileGenerator command line works only on linux systems or OSX.
+Layer_0
+Before running the main script (runMe.sh) is important to modify the configurationFile.R/sh respectively for R layer and python layer. As explained before, this file contains all the instruction for library installation : 
+Python: 
+download libraryName : this is the classic pip installation. Example is download numpy
+downloadgit : download and install library using git. Example is downloadgit https://github.com/httpie/httpie
+downloadConda (Only for python >= 3.0.0 ): download conda environment and install it. Example is downloadConda biopython. Conda Environment will be stored in /snowflakes/condaName folder of the docker container and to activate it is enough to run the following code
+source /snowflakes/condapackageName/bin/activate
 
-Optional step -> Merge docker and work in a jupyter environment
+ 
+downloadbioconda (Only for python >= 3.0.0 ): download conda environment and install it. Example is downloadbioconda mageck. Conda Environment will be stored in /snowflakes/condaName folder of the docker container and to activate it is enough to run the following coder
+source /snowflakes/condapackageName/bin/activate
 
-- If you would like to create a docker with R and python, create two different dockerfile with the respective dockerFileFolder, using the previous step then copy the dockerFolder, in the MergeDocker folder that you can find in /dockerFileGenerator/mergeDocker/. Enter in the folder MergeDocker and follow the other instructions. 
-- After the generation of the new folder, with the merged dockerfile is created you can copy this folder into the jupyter folder. Here you can run the ./runMe.sh providing 3 parameters : the mergedFolder name, the new folder name and the docker name. This process will create another dockerfile and another folder. In this folder there is a script.sh. Running this script will automatically build the docker and run the local server that host the jupyter. In order to work in this docker container with jupyter is enough to start a browser and go to localhost:8888. 
+ 
+R: 
+bioconductor : install libraries that require bioconductor. Example is bioconductor("GenomicRanges")
+cran : install classic libraries from cran repositories. Example is cran("Rtsne")
+github : install libraries from github. Example is github("kendomaniac/rCASC")
+After this file is completed and saved the runMe.sh file can be run. In each layer there is an example.sh file that shows how to run it.  These are the parameters : 
+Temporary docker name. This name will be used for the dummy docker container. Be sure this name is not already taken from an important container or it will overwrite the existing one. 
+Result folder name.
+Absolute path of the folder in which all the results will be stored. 
+Absolute path to the configurationFile.txt.  ConfigurationFile.txt must contain the absolute path to the host folder (third parameter). This parameter is optional and needed only if you are running dockerFileGenerator in a docker container.  Do not pass a fourth input argument if you are running dockerFileGenerator on a local machine. 
+
+Layer_1
+This layer merges two dockerFolder and dockerFile in one. 
+NB Do not merge two R dockers.
+The following are the input parameter for the runMe.sh script : 
+Temporary docker name. This name will be used for the dummy docker container. Be sure this name is not already taken from an important container or it will overwrite the existing one. 
+absolute path of the first dockerFolder
+absolute path of the second dockerFolder
+Result folder name
+Layer_2
+This layer will add a GUI to the docker. This GUI will be accessible on localhost:8888 once the docker is built and running. The following are the parameters for runMe.sh script : 
+absolute path for the merged folder (Layer_1 results). NB. For jupyter is required python and R installation, so the merged folder. For Rstudio and visual studio it can be provided just a python installation or R installation (Layer_0 single result).
+dummy docker name 
+Final docker name
+Absolute path of the folder in which all the results will be stored. 
+
+Layer_3
+This layer will add a virtual engine to the container choosing between docker or singularity. 
+The following are the required input parameter to the runMe.sh script : 
+Absolute path to a dockerFolder generated from dockerFileGenerator Layer_2. 
+ Absolute path of the folder in which all the results will be stored. 
