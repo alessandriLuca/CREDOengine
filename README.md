@@ -49,7 +49,7 @@ The following are the required input parameter to the runMe.sh script :
 - Absolute path of the folder in which all the results will be stored.    
 
 
-[CREDOgui](https://github.com/alessandriLuca/CREDOgui),the GUI to CREDOengine, provides an even more easy way to generate docker and dockerfiles.
+# [CREDOgui](https://github.com/alessandriLuca/CREDOgui),the GUI to CREDOengine, provides an even more easy way to generate docker and dockerfiles.
 The docker customization will be achieved through the following steps:  
 Selecting a specific Python version   
 Selecting a specific R version   
