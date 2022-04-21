@@ -1,5 +1,7 @@
-# dockerFileGenerator
-The Docker engine opened the way to reproducibility in the bioinformatics arena. Furthermore, docker containerization is getting very common as tools to facilitate the distribution of  bioinformatics workflows. Although, it is now very much spread in the biological community because of the complexity of the steps required to build from scratch a docker container. Please use the GUI if you prefer a more automatic way and easy way to generate docker and dockerfiles https://github.com/alessandriLuca/dockerFileGeneratorGUI.
+# CREDOengine (Customizable, REproducible, DOcker file generator)
+Docker is an ideal tool to guarantee reproducibility in the bioinformatics arena. Docker containerization is getting very common as tools to facilitate the distribution of  bioinformatics workflows. Although, it is now very much spread in the biological community, because of the complexity of the steps required to build from scratch a docker container. 
+CREDOengine was build to facilitate the generation of docker images.
+CREDOgui,provies an even more easy way to generate docker and dockerfiles https://github.com/alessandriLuca/dockerFileGeneratorGUI.
 The docker customization will be achieved through the following steps:  
 Selecting a specific Python version   
 Selecting a specific R version   
