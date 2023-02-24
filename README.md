@@ -1,6 +1,6 @@
 # CREDOengine (Customizable, REproducible, DOcker file generator)
 Docker is an ideal tool to guarantee reproducibility in the bioinformatics arena. Docker containerization is getting very common as tools to facilitate the distribution of  bioinformatics workflows. Although, it is now very much spread in the biological community, because of the complexity of the steps required to build from scratch a docker container. 
-CREDOengine was build to facilitate the generation of docker images amnd it is a command line program. 
+CREDOengine was build to facilitate the generation of docker images. 
 
 ## Layer_0  
 Before running the main script (runMe.sh) it is necessary to modify the configurationFile.R/sh respectively for R layer and python layer. This file contains all the instruction for library installation:   
