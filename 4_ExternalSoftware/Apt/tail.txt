@@ -1,0 +1,4 @@
+COPY temp /scratch/temp/
+COPY install_from_temp.sh /scratch/
+COPY install_order.txt /scratch
+RUN /scratch/install_from_temp.sh
