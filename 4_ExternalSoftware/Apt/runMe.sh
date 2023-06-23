@@ -53,7 +53,7 @@ if ! docker build --platform linux/amd64 $2/${j}_wExternalFile/ -t youwillneveru
     exit 1
 fi
 
-if ! docker run -itv $2/${j}_wExternalFile:/scratch youwillneverusethiname bash -c "cat /scratch/softwareList.txt | /scratch/downloadSoft.sh"; then
+if ! docker run -tv $2/${j}_wExternalFile:/scratch youwillneverusethiname bash -c "cat /scratch/softwareList.txt | /scratch/downloadSoft.sh"; then
 echo "Wewweee uagliungell acca c'è qualcosa che non va sfaccimm!!!"
 exit 1
 fi
