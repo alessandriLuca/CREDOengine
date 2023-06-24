@@ -1,1 +1,5 @@
+Mergepath:H+find+Merge Folder Name
+Temp Dockername:H+R
+Dockername:U+empty
 sharedpath:H+/sharedFolder/
+configpath:H+/sharedFolder/configurationFile.txt
