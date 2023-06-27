@@ -96,5 +96,44 @@ swapoff -a
 swapon -a
 printf '\n%s\n' 'Ram-cache and Swap Cleared'
 echo 3 > /proc/sys/vm/drop_caches
+
+
+echo "docker build --platform linux/amd64 . -t " $dockerName  > $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo 'if test -f "./configurationFile.txt"; then' >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo 'echo "$FILE exists."' >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo 'else' >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo 'pwd > configurationFile.txt' >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo 'fi' >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo "tt=\$(head configurationFile.txt)" >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo "mkdir \$tt" >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo "cp ./configurationFile.txt \$tt" >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo "rm \$tt/id.txt" >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+echo "docker run --platform linux/amd64 -itv \$tt:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --cidfile  \$tt/id.txt --privileged=true -p  8888:8888 "$dockerName  >> $pathSharedfoldDock/${j}_wExternalFile/script.sh
+chmod +x $pathSharedfoldDock/${j}_wExternalFile/script.sh
+
+
+
+
+
+echo "docker build --platform linux/amd64 . -t " $dockerName  > $pathSharedfoldDock/${j}_wExternalFile/script.cmd
+echo '@Set "Build=%CD%"' >> $pathSharedfoldDock/${j}_wExternalFile/script.cmd
+echo '@Echo(%Build%' >> $pathSharedfoldDock/${j}_wExternalFile/script.cmd
+echo '@If Not Exist "configurationFile.txt" Set /P "=%Build%" 0<NUL 1>"configurationFile.txt"' >> $pathSharedfoldDock/${j}_wExternalFile/script.cmd
+
+echo "mkdir %Build%"  >> $pathSharedfoldDock/${j}_wExternalFile/script.cmd
+echo "copy configurationFile.txt %Build%"  >> $pathSharedfoldDock/${j}_wExternalFile/script.cmd
+echo "del %Build%\id.txt"  >> $pathSharedfoldDock/${j}_wExternalFile/script.cmd
+echo "docker run --platform linux/amd64 -itv %Build%:/sharedFolder -v /var/run/docker.sock:/var/run/docker.sock --privileged=true --cidfile  %Build%\id.txt  -p  8888:8888 "$dockerName  >> $pathSharedfoldDock/${j}_wExternalFile/script.cmd
+
+if ! docker build --platform linux/amd64 $pathSharedfoldDock/${j}_wExternalFile/ -t $dockerTempName; then
+    echo "Docker container failed!! check log"
+    exit 1
+fi
+
+
+
+
+
+
 echo 'DockerFile generation is done. Locate in DockerFolder and build your final docker.\n'
 

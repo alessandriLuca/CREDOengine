@@ -37,5 +37,6 @@ echo "  dpkg -i /scratch/temp/archives/\$package*.deb" >> /scratch/install_from_
 echo "done" >> /scratch/install_from_temp.sh
 chmod +x /scratch/install_from_temp.sh
 chmod 777 -R /scratch/
+rm /scratch/configurationFile.txt
 echo "Installation completed!"
 
