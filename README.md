@@ -48,7 +48,9 @@ The following are the required input parameter to the runMe.sh script :
 - Absolute path to a dockerFolder generated from dockerFileGenerator Layer_2.    
 - Absolute path of the folder in which all the results will be stored.    
 
-
+## Layer_4 
+This layer allows you to install additional programs using the apt package manager during the Docker file generation process. This feature enables you to incorporate specific software into your Docker environment.
+To use layer 4, you need to specify the desired apt package names in the configuration file and ensure that the apt package manager is properly configured in the Dockerfile. During the Docker file generation, the specified apt packages will be downloaded and installed within the Docker image. Utilizing layer 4 enables further customization of your Docker environment by including specific programs you require for your analysis or project. Make sure to carefully follow the instructions and accurately specify the names of the necessary apt packages in the configuration file. This way, during the Docker file generation, the desired programs will be correctly installed in the Docker image.
 # [CREDOgui](https://github.com/alessandriLuca/CREDOgui), the GUI to CREDOengine, provides an even more easy way to generate docker and dockerfiles.
 The docker customization will be achieved through the following steps:  
 Selecting a specific Python version   
@@ -56,4 +58,4 @@ Selecting a specific R version
 Defining the list of python/R libraries to be included in the docker image   
 Selecting a specific GUI (jupyter, visual studio or Rstudio)  
 Selecting the option of executing docker/singularity instances in docker   
-
+Installing other software other than R or Python and using their binary files to rebuild the docker. 
