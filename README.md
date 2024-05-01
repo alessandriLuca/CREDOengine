@@ -1,4 +1,5 @@
 # CREDOengine (Customizable, REproducible, DOcker file generator)
+# THIS VERSION OF CREDO IS A BETA. WE ARE REWRITING CREDO at the following link https://github.com/CREDOProject/core
 Docker is an ideal tool to guarantee reproducibility in the bioinformatics arena. Docker containerization is getting very common as tools to facilitate the distribution of  bioinformatics workflows. Although, it is now very much spread in the biological community, because of the complexity of the steps required to build from scratch a docker container. 
 CREDOengine was build to facilitate the generation of docker images. 
 
